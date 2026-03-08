@@ -2,48 +2,213 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>أذكار الصباح والمساء</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
+
 body{
-font-family: Arial;
-direction: rtl;
-text-align: center;
-background:#f5f5f5;
+font-family:Tajawal, Arial;
+direction:rtl;
+background:#f3f6fb;
+margin:0;
+text-align:center;
 }
-.zekr{
+
+header{
+background:#2c7be5;
+color:white;
+padding:20px;
+font-size:24px;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+padding:20px;
+}
+
+.card{
 background:white;
 padding:20px;
-margin:15px;
-border-radius:10px;
+margin:15px 0;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
+
+.count{
+font-size:22px;
+margin:10px;
+}
+
 button{
+background:#2c7be5;
+color:white;
+border:none;
 padding:10px 20px;
 font-size:18px;
+border-radius:10px;
+cursor:pointer;
 }
+
+button:hover{
+background:#1b5bbf;
+}
+
+.progress{
+height:8px;
+background:#eee;
+border-radius:10px;
+margin-top:10px;
+}
+
+.bar{
+height:8px;
+background:#2c7be5;
+width:0%;
+border-radius:10px;
+}
+
+.tabs{
+margin:20px;
+}
+
+.tabs button{
+margin:5px;
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>أذكار الصباح والمساء</h1>
+<header>
+<i class="fa-solid fa-mosque"></i>
+أذكار الصباح والمساء
+</header>
 
-<div class="zekr">
-<p>سبحان الله وبحمده</p>
-<p>العدد المطلوب: 100</p>
-<button onclick="count1++ ; document.getElementById('c1').innerText=count1">اضغط</button>
-<p id="c1">0</p>
+<div class="tabs">
+<button onclick="showMorning()">🌞 أذكار الصباح</button>
+<button onclick="showEvening()">🌙 أذكار المساء</button>
 </div>
 
-<div class="zekr">
-<p>أستغفر الله</p>
-<p>العدد المطلوب: 100</p>
-<button onclick="count2++ ; document.getElementById('c2').innerText=count2">اضغط</button>
-<p id="c2">0</p>
-</div>
+<div class="container" id="content"></div>
 
 <script>
-let count1=0;
-let count2=0;
+
+const morning = [
+
+{zekr:"آية الكرسي",max:1},
+
+{zekr:"قل هو الله أحد",max:3},
+
+{zekr:"قل أعوذ برب الفلق",max:3},
+
+{zekr:"قل أعوذ برب الناس",max:3},
+
+{zekr:"بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم",max:3},
+
+{zekr:"رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا",max:3},
+
+{zekr:"اللهم بك أصبحنا وبك أمسينا وبك نحيا وبك نموت وإليك النشور",max:1},
+
+{zekr:"سيد الاستغفار",max:1},
+
+{zekr:"سبحان الله وبحمده",max:100}
+
+]
+
+const evening = [
+
+{zekr:"آية الكرسي",max:1},
+
+{zekr:"قل هو الله أحد",max:3},
+
+{zekr:"قل أعوذ برب الفلق",max:3},
+
+{zekr:"قل أعوذ برب الناس",max:3},
+
+{zekr:"بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم",max:3},
+
+{zekr:"رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا",max:3},
+
+{zekr:"اللهم بك أمسينا وبك أصبحنا وبك نحيا وبك نموت وإليك المصير",max:1},
+
+{zekr:"سيد الاستغفار",max:1},
+
+{zekr:"سبحان الله وبحمده",max:100}
+
+]
+
+function render(list){
+
+let html=""
+
+list.forEach((item,i)=>{
+
+html+=`
+
+<div class="card">
+
+<p>${item.zekr}</p>
+
+<div class="count" id="c${i}">0 / ${item.max}</div>
+
+<button onclick="inc(${i},${item.max})">
+<i class="fa-solid fa-hand"></i>
+ذكر
+</button>
+
+<div class="progress">
+<div class="bar" id="b${i}"></div>
+</div>
+
+</div>
+
+`
+
+})
+
+document.getElementById("content").innerHTML=html
+
+}
+
+function inc(i,max){
+
+let el=document.getElementById("c"+i)
+
+let val=parseInt(el.innerText)
+
+if(val<max){
+
+val++
+
+el.innerText=val+" / "+max
+
+let percent=(val/max)*100
+
+document.getElementById("b"+i).style.width=percent+"%"
+
+}
+
+}
+
+function showMorning(){
+
+render(morning)
+
+}
+
+function showEvening(){
+
+render(evening)
+
+}
+
+showMorning()
+
 </script>
 
 </body>
