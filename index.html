@@ -192,6 +192,9 @@ const eveningAzkar = [
 
 {zekr:"قل أعوذ برب الناس * ملك الناس * إله الناس * من شر الوسواس الخناس * الذي يوسوس في صدور الناس * من الجنة والناس",max:3},];
 
+// تأكد أن DOM جاهز قبل تشغيل JS
+document.addEventListener("DOMContentLoaded", function(){
+
 // الصفحة الرئيسية
 function showHome() {
   const app = document.getElementById("app");
@@ -239,4 +242,54 @@ function increment(type, i, max) {
   if (current < max) current++;
   countEl.innerText = current + " / " + max;
 
-  const percent = (current / max) * 10…
+  const percent = (current / max) * 100;
+  document.getElementById("bar" + i).style.width = percent + "%";
+
+  const cards = document.querySelectorAll(".card");
+  let done = 0;
+  cards.forEach(card => {
+    const text = card.querySelector(".count").innerText;
+    const val = parseInt(text.split(" / ")[0]);
+    const maxVal = parseInt(text.split(" / ")[1]);
+    if (val >= maxVal) done++;
+  });
+  const percentDone = Math.round((done / cards.length) * 100);
+  document.querySelector("h3").innerText = "نسبة إنجاز الأذكار " + percentDone + "%";
+}
+
+// المسبحة الإلكترونية
+function showTasbeeh() {
+  const app = document.getElementById("app");
+  let count = 0;
+  app.innerHTML = `
+    <h2>📿 المسبحة</h2>
+    <h1 id="tas">${count}</h1>
+    <button onclick="incrementTasbeeh()">تسبيح</button>
+    <button onclick="resetTasbeeh()">تصفير</button>
+  `;
+}
+
+function incrementTasbeeh() {
+  const c = document.getElementById("tas");
+  let val = parseInt(c.innerText);
+  val++;
+  c.innerText = val;
+}
+
+function resetTasbeeh() {
+  const c = document.getElementById("tas");
+  c.innerText = 0;
+}
+
+// الوضع الليلي
+function toggleDark() {
+  document.body.classList.toggle("dark");
+}
+
+// عرض الصفحة الرئيسية عند التحميل
+showHome();
+
+}); // DOMContentLoaded
+</script>
+</body>
+</html>
