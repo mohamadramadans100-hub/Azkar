@@ -2,94 +2,30 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>أذكار الصباح والمساء</title>
 <style>
-body{
-  font-family:Tajawal, Arial;
-  direction:rtl;
-  margin:0;
-  background:#f3f5f9;
-  text-align:center;
-  transition:0.3s;
-}
-header{
-  background:#2f74da;
-  color:white;
-  padding:20px;
-  font-size:22px;
-}
-.container{
-  max-width:700px;
-  margin:auto;
-  padding:20px;
-}
-.main-btn{
-  width:260px;
-  padding:18px;
-  margin:10px;
-  font-size:20px;
-  border:none;
-  border-radius:14px;
-  background:#2f74da;
-  color:white;
-  cursor:pointer;
-  transition:0.2s;
-}
-.main-btn:active{
-  transform:scale(0.95);
-}
-.card{
-  background:white;
-  padding:20px;
-  margin:15px 0;
-  border-radius:15px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
-button{
-  background:#2f74da;
-  color:white;
-  border:none;
-  padding:10px 20px;
-  font-size:18px;
-  border-radius:10px;
-  cursor:pointer;
-}
-.count{
-  font-size:24px;
-  margin:10px;
-}
-.progress{
-  background:#ddd;
-  height:10px;
-  border-radius:10px;
-}
-.bar{
-  height:10px;
-  background:#2f74da;
-  width:0%;
-  border-radius:10px;
-}
-.dark{
-  background:#121212;
-  color:white;
-}
-.dark header{
-  background:#1f1f1f;
-}
-.dark .card{
-  background:#1e1e1e;
-}
-.top-buttons{
-  margin-top:10px;
-}
+body{font-family:Tajawal, Arial;direction:rtl;margin:0;background:#f3f5f9;text-align:center;transition:0.3s;}
+header{background:#2f74da;color:white;padding:20px;font-size:22px;}
+.container{max-width:700px;margin:auto;padding:20px;}
+.main-btn{width:260px;padding:18px;margin:10px;font-size:20px;border:none;border-radius:14px;background:#2f74da;color:white;cursor:pointer;transition:0.2s;}
+.main-btn:active{transform:scale(0.95);}
+.card{background:white;padding:20px;margin:15px 0;border-radius:15px;box-shadow:0 5px 15px rgba(0,0,0,0.1);}
+button{background:#2f74da;color:white;border:none;padding:10px 20px;font-size:18px;border-radius:10px;cursor:pointer;}
+.count{font-size:24px;margin:10px;}
+.progress{background:#ddd;height:10px;border-radius:10px;}
+.bar{height:10px;background:#2f74da;width:0%;border-radius:10px;}
+.dark{background:#121212;color:white;}
+.dark header{background:#1f1f1f;}
+.dark .card{background:#1e1e1e;}
+.top-buttons{margin-top:10px;}
 </style>
 </head>
 <body>
 <header>
 📿 أذكار الصباح والمساء
 <div class="top-buttons">
-<button onclick="showHome()">الرئيسية</button>
+<button onclick="home()">الرئيسية</button>
 <button onclick="toggleDark()">🌙 الوضع الليلي</button>
 </div>
 </header>
@@ -98,124 +34,111 @@ button{
 
 <script>
 // أذكار الصباح والمساء
-const morningAzkar = [
-  { text: "آية الكرسي", max: 1 },
-  { text: "قل هو الله أحد", max: 3 },
-  { text: "قل أعوذ برب الفلق", max: 3 },
-  { text: "قل أعوذ برب الناس", max: 3 },
-  { text: "بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء", max: 3 },
-  { text: "رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا", max: 3 },
-  { text: "سبحان الله وبحمده", max: 100 }
+const morning=[
+{zekr:"آية الكرسي",max:1},
+{zekr:"قل هو الله أحد",max:3},
+{zekr:"قل أعوذ برب الفلق",max:3},
+{zekr:"قل أعوذ برب الناس",max:3},
+{zekr:"بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء",max:3},
+{zekr:"رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا",max:3},
+{zekr:"سبحان الله وبحمده",max:100}
 ];
 
-const eveningAzkar = [
-  { text: "آية الكرسي", max: 1 },
-  { text: "قل هو الله أحد", max: 3 },
-  { text: "قل أعوذ برب الفلق", max: 3 },
-  { text: "قل أعوذ برب الناس", max: 3 },
-  { text: "بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء", max: 3 },
-  { text: "رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا", max: 3 },
-  { text: "سبحان الله وبحمده", max: 100 }
+const evening=[
+{zekr:"آية الكرسي",max:1},
+{zekr:"قل هو الله أحد",max:3},
+{zekr:"قل أعوذ برب الفلق",max:3},
+{zekr:"قل أعوذ برب الناس",max:3},
+{zekr:"بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء",max:3},
+{zekr:"رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا",max:3},
+{zekr:"سبحان الله وبحمده",max:100}
 ];
-
-// تأكد أن DOM جاهز قبل تشغيل JS
-document.addEventListener("DOMContentLoaded", function(){
 
 // الصفحة الرئيسية
-function showHome() {
-  const app = document.getElementById("app");
-  app.innerHTML = `
-    <h2>اختر الأذكار</h2>
-    <button class="main-btn" onclick="showAzkar('morning')">🌞 أذكار الصباح</button>
-    <button class="main-btn" onclick="showAzkar('evening')">🌙 أذكار المساء</button>
-    <br><br>
-    <button class="main-btn" onclick="showTasbeeh()">📿 المسبحة الإلكترونية</button>
+function home(){
+  document.getElementById("app").innerHTML=`
+<h2>اختر الأذكار</h2>
+<button class="main-btn" onclick="showAzkar('morning')">🌞 أذكار الصباح</button>
+<button class="main-btn" onclick="showAzkar('evening')">🌙 أذكار المساء</button>
+<button class="main-btn" onclick="tasbeeh()">📿 المسبحة الإلكترونية</button>
   `;
 }
 
 // عرض الأذكار
-function showAzkar(type) {
-  const list = type === "morning" ? morningAzkar : eveningAzkar;
-  let html = "";
-  let done = 0;
+function showAzkar(type){
+  let list=type==="morning"?morning:evening;
+  let html="";
+  let done=0;
 
-  list.forEach((item, i) => {
-    let current = 0; // كل مرة يبدأ من صفر
-    if (current >= item.max) done++;
-    let percent = (current / item.max) * 100;
+  list.forEach((item,i)=>{
+    let saved=0; // يبدأ من صفر دائمًا
+    if(saved>=item.max) done++;
+    let percent=(saved/item.max)*100;
 
-    html += `
-      <div class="card">
-        <p>${item.text}</p>
-        <div class="count" id="count${i}">${current} / ${item.max}</div>
-        <button onclick="increment('${type}', ${i}, ${item.max})">ذكر</button>
-        <div class="progress">
-          <div class="bar" id="bar${i}" style="width:${percent}%"></div>
-        </div>
-      </div>
+    html+=`
+<div class="card">
+<p>${item.zekr}</p>
+<div class="count">${saved} / ${item.max}</div>
+<button onclick="inc(${i},${item.max},'${type}')">ذكر</button>
+<div class="progress">
+<div class="bar" style="width:${percent}%"></div>
+</div>
+</div>
     `;
   });
 
-  const percentDone = Math.round((done / list.length) * 100);
-  html = <h3>نسبة إنجاز الأذكار ${percentDone}%</h3> + html;
-  document.getElementById("app").innerHTML = html;
+  let percentDone=Math.round(done/list.length*100);
+  html="<h3>نسبة إنجاز الأذكار "+percentDone+"%</h3>"+html;
+  document.getElementById("app").innerHTML=html;
 }
 
-// زيادة العداد عند الضغط
-function increment(type, i, max) {
-  const countEl = document.getElementById("count" + i);
-  let current = parseInt(countEl.innerText);
-  if (current < max) current++;
-  countEl.innerText = current + " / " + max;
+// زيادة العداد
+function inc(index,max,type){
+  const countEls=document.querySelectorAll(".count");
+  let val=parseInt(countEls[index].innerText);
+  if(val<max) val++;
+  countEls[index].innerText=val+" / "+max;
+  document.querySelectorAll(".bar")[index].style.width=(val/max*100)+"%";
 
-  const percent = (current / max) * 100;
-  document.getElementById("bar" + i).style.width = percent + "%";
-
-  const cards = document.querySelectorAll(".card");
-  let done = 0;
-  cards.forEach(card => {
-    const text = card.querySelector(".count").innerText;
-    const val = parseInt(text.split(" / ")[0]);
-    const maxVal = parseInt(text.split(" / ")[1]);
-    if (val >= maxVal) done++;
+  // إعادة حساب نسبة الإنجاز
+  const cards=document.querySelectorAll(".card");
+  let done=0;
+  cards.forEach(card=>{
+    let val=parseInt(card.querySelector(".count").innerText.split(" / ")[0]);
+    let maxVal=parseInt(card.querySelector(".count").innerText.split(" / ")[1]);
+    if(val>=maxVal) done++;
   });
-  const percentDone = Math.round((done / cards.length) * 100);
-  document.querySelector("h3").innerText = "نسبة إنجاز الأذكار " + percentDone + "%";
+  document.querySelector("h3").innerText="نسبة إنجاز الأذكار "+Math.round(done/cards.length*100)+"%";
 }
 
 // المسبحة الإلكترونية
-function showTasbeeh() {
-  const app = document.getElementById("app");
-  let count = 0;
-  app.innerHTML = `
-    <h2>📿 المسبحة</h2>
-    <h1 id="tas">${count}</h1>
-    <button onclick="incrementTasbeeh()">تسبيح</button>
-    <button onclick="resetTasbeeh()">تصفير</button>
+function tasbeeh(){
+  let count=0; // يبدأ من صفر دائمًا
+  document.getElementById("app").innerHTML=`
+<h2>📿 المسبحة</h2>
+<h1 id="tas">${count}</h1>
+<button onclick="incTas()">تسبيح</button>
+<button onclick="resetTas()">تصفير</button>
   `;
 }
 
-function incrementTasbeeh() {
-  const c = document.getElementById("tas");
-  let val = parseInt(c.innerText);
+function incTas(){
+  let c=document.getElementById("tas");
+  let val=parseInt(c.innerText);
   val++;
-  c.innerText = val;
+  c.innerText=val;
 }
 
-function resetTasbeeh() {
-  const c = document.getElementById("tas");
-  c.innerText = 0;
+function resetTas(){
+  document.getElementById("tas").innerText=0;
 }
 
 // الوضع الليلي
-function toggleDark() {
+function toggleDark(){
   document.body.classList.toggle("dark");
 }
 
-// عرض الصفحة الرئيسية عند التحميل
-showHome();
-
-}); // DOMContentLoaded
+home();
 </script>
 </body>
 </html>
