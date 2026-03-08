@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="ar">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>الأذكار</title>
+<title>أذكار الصباح والمساء</title>
 
 <style>
 
@@ -14,7 +12,7 @@ body{
 font-family:Tahoma;
 direction:rtl;
 margin:0;
-background:#f1f3f7;
+background:#f2f4f8;
 text-align:center;
 }
 
@@ -31,75 +29,71 @@ margin:auto;
 padding:20px;
 }
 
-button{
-
+.main-btn{
+width:250px;
+padding:18px;
+margin:10px;
+font-size:20px;
+border:none;
+border-radius:14px;
 background:#2f74da;
 color:white;
-border:none;
-padding:15px 25px;
-margin:10px;
-font-size:18px;
-border-radius:12px;
 cursor:pointer;
-
 }
 
 .card{
-
 background:white;
 padding:20px;
 margin:15px 0;
 border-radius:15px;
 box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
 
+button{
+background:#2f74da;
+color:white;
+border:none;
+padding:10px 20px;
+font-size:18px;
+border-radius:10px;
+cursor:pointer;
 }
 
 .count{
-
 font-size:24px;
 margin:10px;
-
 }
 
 .progress{
-
 background:#ddd;
 height:10px;
 border-radius:10px;
-
 }
 
 .bar{
-
 height:10px;
 background:#2f74da;
 width:0%;
 border-radius:10px;
-
 }
 
 .dark{
-
 background:#121212;
 color:white;
-
 }
 
 .dark .card{
-
 background:#1e1e1e;
-
 }
 
 </style>
-
 </head>
 
 <body>
 
 <header>
 
-📿 الأذكار
+📿 أذكار الصباح والمساء
 
 <br><br>
 
@@ -151,19 +145,17 @@ const evening=[
 
 function home(){
 
-document.getElementById("app").innerHTML=
-
-`
+document.getElementById("app").innerHTML=`
 
 <h2>اختر الأذكار</h2>
 
-<button onclick="showAzkar('morning')">🌞 أذكار الصباح</button>
+<button class="main-btn" onclick="showAzkar('morning')">🌞 أذكار الصباح</button>
 
-<button onclick="showAzkar('evening')">🌙 أذكار المساء</button>
+<button class="main-btn" onclick="showAzkar('evening')">🌙 أذكار المساء</button>
 
 <br><br>
 
-<button onclick="tasbeeh()">📿 المسبحة الإلكترونية</button>
+<button class="main-btn" onclick="tasbeeh()">📿 المسبحة الإلكترونية</button>
 
 `
 
@@ -171,7 +163,7 @@ document.getElementById("app").innerHTML=
 
 function showAzkar(type){
 
-let list=type=="morning"?morning:evening
+let list= type==="morning" ? morning : evening
 
 let html=""
 
@@ -179,9 +171,7 @@ let done=0
 
 list.forEach((item,i)=>{
 
-let saved=localStorage.getItem(type+i) || 0
-
-saved=parseInt(saved)
+let saved=parseInt(localStorage.getItem(type+i) || 0)
 
 if(saved>=item.max) done++
 
@@ -193,13 +183,13 @@ html+=`
 
 <p>${item.zekr}</p>
 
-<div class="count" id="c${i}">${saved} / ${item.max}</div>
+<div class="count" id="count${i}">${saved} / ${item.max}</div>
 
 <button onclick="inc('${type}',${i},${item.max})">ذكر</button>
 
 <div class="progress">
 
-<div class="bar" id="b${i}" style="width:${percent}%"></div>
+<div class="bar" id="bar${i}" style="width:${percent}%"></div>
 
 </div>
 
@@ -211,7 +201,7 @@ html+=`
 
 let percentDone=Math.round(done/list.length*100)
 
-html=<h3>نسبة الإنجاز ${percentDone}%</h3>+html
+html="<h3>نسبة إنجاز الأذكار "+percentDone+"%</h3>"+html
 
 document.getElementById("app").innerHTML=html
 
@@ -219,33 +209,27 @@ document.getElementById("app").innerHTML=html
 
 function inc(type,i,max){
 
-let el=document.getElementById("c"+i)
+let key=type+i
 
-let val=parseInt(el.innerText)
+let val=parseInt(localStorage.getItem(key) || 0)
 
 if(val<max){
 
 val++
 
-localStorage.setItem(type+i,val)
-
-el.innerText=val+" / "+max
-
-let percent=(val/max)*100
-
-document.getElementById("b"+i).style.width=percent+"%"
+localStorage.setItem(key,val)
 
 }
+
+showAzkar(type)
 
 }
 
 function tasbeeh(){
 
-let count=localStorage.getItem("tasbeeh")||0
+let count=parseInt(localStorage.getItem("tasbeeh") || 0)
 
-document.getElementById("app").innerHTML=
-
-`
+document.getElementById("app").innerHTML=`
 
 <h2>📿 المسبحة</h2>
 
@@ -261,15 +245,13 @@ document.getElementById("app").innerHTML=
 
 function incTas(){
 
-let c=document.getElementById("tas")
-
-let v=parseInt(c.innerText)
+let v=parseInt(localStorage.getItem("tasbeeh") || 0)
 
 v++
 
-c.innerText=v
-
 localStorage.setItem("tasbeeh",v)
+
+tasbeeh()
 
 }
 
@@ -292,5 +274,4 @@ home()
 </script>
 
 </body>
-
 </html>
