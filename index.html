@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="ar">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>أذكار الصباح والمساء</title>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>الأذكار</title>
 
 <style>
 
 body{
-font-family:Tajawal, Arial;
+font-family:Tahoma;
 direction:rtl;
-background:#f3f6fb;
 margin:0;
+background:#f1f3f7;
 text-align:center;
 }
 
 header{
-background:#2c7be5;
+background:#2f74da;
 color:white;
 padding:20px;
 font-size:24px;
@@ -30,75 +31,89 @@ margin:auto;
 padding:20px;
 }
 
+button{
+
+background:#2f74da;
+color:white;
+border:none;
+padding:15px 25px;
+margin:10px;
+font-size:18px;
+border-radius:12px;
+cursor:pointer;
+
+}
+
 .card{
+
 background:white;
 padding:20px;
 margin:15px 0;
 border-radius:15px;
 box-shadow:0 5px 15px rgba(0,0,0,0.1);
+
 }
 
 .count{
-font-size:22px;
+
+font-size:24px;
 margin:10px;
-}
 
-button{
-background:#2c7be5;
-color:white;
-border:none;
-padding:10px 20px;
-font-size:18px;
-border-radius:10px;
-cursor:pointer;
-}
-
-button:hover{
-background:#1b5bbf;
 }
 
 .progress{
-height:8px;
-background:#eee;
+
+background:#ddd;
+height:10px;
 border-radius:10px;
-margin-top:10px;
+
 }
 
 .bar{
-height:8px;
-background:#2c7be5;
+
+height:10px;
+background:#2f74da;
 width:0%;
 border-radius:10px;
+
 }
 
-.tabs{
-margin:20px;
+.dark{
+
+background:#121212;
+color:white;
+
 }
 
-.tabs button{
-margin:5px;
+.dark .card{
+
+background:#1e1e1e;
+
 }
 
 </style>
+
 </head>
 
 <body>
 
 <header>
-<i class="fa-solid fa-mosque"></i>
-أذكار الصباح والمساء
+
+📿 الأذكار
+
+<br><br>
+
+<button onclick="home()">الرئيسية</button>
+
+<button onclick="toggleDark()">🌙 الوضع الليلي</button>
+
 </header>
 
-<div class="tabs">
-<button onclick="showMorning()">🌞 أذكار الصباح</button>
-<button onclick="showEvening()">🌙 أذكار المساء</button>
-</div>
-
-<div class="container" id="content"></div>
+<div class="container" id="app"></div>
 
 <script>
 
-const morning = [
+const morning=[
 
 {zekr:"آية الكرسي",max:1},
 
@@ -108,19 +123,15 @@ const morning = [
 
 {zekr:"قل أعوذ برب الناس",max:3},
 
-{zekr:"بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم",max:3},
+{zekr:"بسم الله الذي لا يضر مع اسمه شيء",max:3},
 
 {zekr:"رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا",max:3},
-
-{zekr:"اللهم بك أصبحنا وبك أمسينا وبك نحيا وبك نموت وإليك النشور",max:1},
-
-{zekr:"سيد الاستغفار",max:1},
 
 {zekr:"سبحان الله وبحمده",max:100}
 
 ]
 
-const evening = [
+const evening=[
 
 {zekr:"آية الكرسي",max:1},
 
@@ -130,23 +141,51 @@ const evening = [
 
 {zekr:"قل أعوذ برب الناس",max:3},
 
-{zekr:"بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم",max:3},
+{zekr:"بسم الله الذي لا يضر مع اسمه شيء",max:3},
 
 {zekr:"رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا",max:3},
-
-{zekr:"اللهم بك أمسينا وبك أصبحنا وبك نحيا وبك نموت وإليك المصير",max:1},
-
-{zekr:"سيد الاستغفار",max:1},
 
 {zekr:"سبحان الله وبحمده",max:100}
 
 ]
 
-function render(list){
+function home(){
+
+document.getElementById("app").innerHTML=
+
+`
+
+<h2>اختر الأذكار</h2>
+
+<button onclick="showAzkar('morning')">🌞 أذكار الصباح</button>
+
+<button onclick="showAzkar('evening')">🌙 أذكار المساء</button>
+
+<br><br>
+
+<button onclick="tasbeeh()">📿 المسبحة الإلكترونية</button>
+
+`
+
+}
+
+function showAzkar(type){
+
+let list=type=="morning"?morning:evening
 
 let html=""
 
+let done=0
+
 list.forEach((item,i)=>{
+
+let saved=localStorage.getItem(type+i) || 0
+
+saved=parseInt(saved)
+
+if(saved>=item.max) done++
+
+let percent=(saved/item.max)*100
 
 html+=`
 
@@ -154,15 +193,14 @@ html+=`
 
 <p>${item.zekr}</p>
 
-<div class="count" id="c${i}">0 / ${item.max}</div>
+<div class="count" id="c${i}">${saved} / ${item.max}</div>
 
-<button onclick="inc(${i},${item.max})">
-<i class="fa-solid fa-hand"></i>
-ذكر
-</button>
+<button onclick="inc('${type}',${i},${item.max})">ذكر</button>
 
 <div class="progress">
-<div class="bar" id="b${i}"></div>
+
+<div class="bar" id="b${i}" style="width:${percent}%"></div>
+
 </div>
 
 </div>
@@ -171,11 +209,15 @@ html+=`
 
 })
 
-document.getElementById("content").innerHTML=html
+let percentDone=Math.round(done/list.length*100)
+
+html=<h3>نسبة الإنجاز ${percentDone}%</h3>+html
+
+document.getElementById("app").innerHTML=html
 
 }
 
-function inc(i,max){
+function inc(type,i,max){
 
 let el=document.getElementById("c"+i)
 
@@ -184,6 +226,8 @@ let val=parseInt(el.innerText)
 if(val<max){
 
 val++
+
+localStorage.setItem(type+i,val)
 
 el.innerText=val+" / "+max
 
@@ -195,21 +239,58 @@ document.getElementById("b"+i).style.width=percent+"%"
 
 }
 
-function showMorning(){
+function tasbeeh(){
 
-render(morning)
+let count=localStorage.getItem("tasbeeh")||0
+
+document.getElementById("app").innerHTML=
+
+`
+
+<h2>📿 المسبحة</h2>
+
+<h1 id="tas">${count}</h1>
+
+<button onclick="incTas()">تسبيح</button>
+
+<button onclick="resetTas()">تصفير</button>
+
+`
 
 }
 
-function showEvening(){
+function incTas(){
 
-render(evening)
+let c=document.getElementById("tas")
+
+let v=parseInt(c.innerText)
+
+v++
+
+c.innerText=v
+
+localStorage.setItem("tasbeeh",v)
 
 }
 
-showMorning()
+function resetTas(){
+
+localStorage.setItem("tasbeeh",0)
+
+tasbeeh()
+
+}
+
+function toggleDark(){
+
+document.body.classList.toggle("dark")
+
+}
+
+home()
 
 </script>
 
 </body>
+
 </html>
