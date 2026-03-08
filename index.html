@@ -1,154 +1,104 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>أذكار الصباح والمساء</title>
-
 <style>
-
 body{
-font-family:Tajawal, Arial;
-direction:rtl;
-margin:0;
-background:#f3f5f9;
-text-align:center;
-transition:0.3s;
+  font-family:Tajawal, Arial;
+  direction:rtl;
+  margin:0;
+  background:#f3f5f9;
+  text-align:center;
+  transition:0.3s;
 }
-
 header{
-background:#2f74da;
-color:white;
-padding:20px;
-font-size:22px;
+  background:#2f74da;
+  color:white;
+  padding:20px;
+  font-size:22px;
 }
-
 .container{
-max-width:700px;
-margin:auto;
-padding:20px;
+  max-width:700px;
+  margin:auto;
+  padding:20px;
 }
-
 .main-btn{
-
-width:260px;
-padding:18px;
-margin:10px;
-font-size:20px;
-border:none;
-border-radius:14px;
-background:#2f74da;
-color:white;
-cursor:pointer;
-transition:0.2s;
-
+  width:260px;
+  padding:18px;
+  margin:10px;
+  font-size:20px;
+  border:none;
+  border-radius:14px;
+  background:#2f74da;
+  color:white;
+  cursor:pointer;
+  transition:0.2s;
 }
-
 .main-btn:active{
-
-transform:scale(0.95);
-
+  transform:scale(0.95);
 }
-
 .card{
-
-background:white;
-padding:20px;
-margin:15px 0;
-border-radius:15px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
-
+  background:white;
+  padding:20px;
+  margin:15px 0;
+  border-radius:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
-
 button{
-
-background:#2f74da;
-color:white;
-border:none;
-padding:10px 20px;
-font-size:18px;
-border-radius:10px;
-cursor:pointer;
-
+  background:#2f74da;
+  color:white;
+  border:none;
+  padding:10px 20px;
+  font-size:18px;
+  border-radius:10px;
+  cursor:pointer;
 }
-
 .count{
-
-font-size:24px;
-margin:10px;
-
+  font-size:24px;
+  margin:10px;
 }
-
 .progress{
-
-background:#ddd;
-height:10px;
-border-radius:10px;
-
+  background:#ddd;
+  height:10px;
+  border-radius:10px;
 }
-
 .bar{
-
-height:10px;
-background:#2f74da;
-width:0%;
-border-radius:10px;
-
+  height:10px;
+  background:#2f74da;
+  width:0%;
+  border-radius:10px;
 }
-
 .dark{
-
-background:#121212;
-color:white;
-
+  background:#121212;
+  color:white;
 }
-
 .dark header{
-
-background:#1f1f1f;
-
+  background:#1f1f1f;
 }
-
 .dark .card{
-
-background:#1e1e1e;
-
+  background:#1e1e1e;
 }
-
 .top-buttons{
-
-margin-top:10px;
-
+  margin-top:10px;
 }
-
 </style>
-
 </head>
-
 <body>
-
 <header>
-
 📿 أذكار الصباح والمساء
-
 <div class="top-buttons">
-
-<button onclick="home()">الرئيسية</button>
-
+<button onclick="showHome()">الرئيسية</button>
 <button onclick="toggleDark()">🌙 الوضع الليلي</button>
-
 </div>
-
 </header>
 
 <div class="container" id="app"></div>
 
 <script>
-
-const morning=[
-  
+// أذكار الصباح والمساء
+const morningAzkar = [
 {zekr:"أصبحنا وأصبح الملك لله والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير. رب أسألك خير ما في هذا اليوم وخير ما بعده وأعوذ بك من شر ما في هذا اليوم وشر ما بعده. رب أعوذ بعك من الكسل وسوء الكبر. رب أعوذ بك من عذاب في النار وعذاب في القبر",max:1},
 
 {zekr:"اللهم إني أصبحت أشهدك وأشهد حملة عرشك وملائكتك وجميع خلقك إنك أنت الله لا إله إلا أنت وحدك لا شريك لك وأن محمدأ عبدك ورسولك",max:4},
@@ -193,53 +143,75 @@ const morning=[
 
 {zekr:"قل أعوذ برب الفلق * من شر ما خلق * ومن شر غاسق إذا وقب * ومن شر النفاسات في العقد * ومن شر حاسد إذا حسد",max:3},
 
-{zekr:"قل أعوذ برب الناس * ملك الناس * إله الناس * من شر الوسواس الخناس * الذي يوسوس في صدور الناس * من الجنة والناس",max:3},
+{zekr:"قل أعوذ برب الناس * ملك الناس * إله الناس * من شر الوسواس الخناس * الذي يوسوس في صدور الناس * من الجنة والناس",max:3},];
 
+const eveningAzkar = [
+{zekr:"أصبحنا وأصبح الملك لله والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير. رب أسألك خير ما في هذا اليوم وخير ما بعده وأعوذ بك من شر ما في هذا اليوم وشر ما بعده. رب أعوذ بعك من الكسل وسوء الكبر. رب أعوذ بك من عذاب في النار وعذاب في القبر",max:1},
 
-]
+{zekr:"اللهم إني أصبحت أشهدك وأشهد حملة عرشك وملائكتك وجميع خلقك إنك أنت الله لا إله إلا أنت وحدك لا شريك لك وأن محمدأ عبدك ورسولك",max:4},
 
-const evening=[
+{zekr:"أصبحنا وأصبح الملك لله رب العالمين، اللهم إني أسألك خير هذا اليوم فتحه، ونصره، نوره، وبركته، وهداه وأعوذ بك من شر ما فيه وشر ما بعده",max:1},
 
-{zekr:"آية الكرسي",max:1},
+{zekr:"أصبحنا على فطرة الإسلام، وعلى كلمة الإخلاص، وعلى دين نبينا محمد ﷺ وعلى ملة أبينا إبراهيم حنيفًا مسلمًا وما كان من المشكرين",max:1},
 
-{zekr:"قل هو الله أحد",max:3},
+{zekr:"اللهم بك أصبحنا وبك أمسينا وبك نحيا وبك نموت وإليك النشور",max:1},
 
-{zekr:"قل أعوذ برب الفلق",max:3},
+{zekr:"اللهم ما أصبح بي من نعمة، أو بأحد من خلقك فمنك وحدك لا شريك لك، فلك الحمد ولك الشكر",max:1},
 
-{zekr:"قل أعوذ برب الناس",max:3},
+{zekr:"رضيت بالله ربًا، وبالإسلام دينًا، وبمحمد ﷺ نبيًا ورسولًا",max:1},
 
-{zekr:"بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء",max:3},
+{zekr:"اللهم إني أسألك علمًا نافعًا، ورزقًا طيبًا، وعملًا متقبلًا",max:1},
 
-{zekr:"رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا",max:3},
+{zekr:"يا حي يا قيوم برحمتك استغيث اصلح لي شأني كله ولا تكلني إلى نفسي طرفة عين",max:1},
 
-{zekr:"سبحان الله وبحمده",max:100}
+{zekr:"اللهم أنت ربي، لا إله إلا أنت، خلقتني وانا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بذنبي فاغفر لي فإنه لا يغفر الذنوب إلا أنت",max:1},
 
-]
+{zekr:"اللهم عالم الغيب والشهادة، فاطر السماوات والأرض، رب كل شيء ومليكه، أشهد أن لا إله إلا أنت، أعوذ بك من شر نفسي، ومن شر الشيطان وشركه، وأن أقترف على نفسي سوءًا أو أجره إلى مسلم",max:1},
 
-function home(){
+{zekr:"اللهم إني أسألك العفو والعافية في لدنيا والآخرة، اللهم إني أسألك العفو والعافية في ديني ودنياي وأهلي ومالي، اللهم أستر عوراتي وآمن روعات، اللهم أحفظني من بين يدي ومن خلفي وعن يميني وعن شمالي ومن فوقي، وأعوذ بعظمتك أن أغتال من تحتي",max:1},
 
-document.getElementById("app").innerHTML=`
+{zekr:"اللهم عافني في بدني، اللهم عافني في سمعي، اللهم عافني في بصري، لا إله إلا أنت، اللهم إني أعوذ بك من الكُفر والفقر، وأعوذ بك من عذاب القبر، لا إله إلا أنت",max:3},
 
-<h2>اختر الأذكار</h2>
+{zekr:"بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم",max:3},
 
-<button class="main-btn" onclick="showAzkar('morning')">🌞 أذكار الصباح</button>
+{zekr:"سبحان الله وبحمده عدد خلقه، ورضا نفسه، وزنة عرشه، ومداد كلماته",max:3},
 
-<button class="main-btn" onclick="showAzkar('evening')">🌙 أذكار المساء</button>
+{zekr:"حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم",max:7},
 
-<button class="main-btn" onclick="tasbeeh()">📿 المسبحة الإلكترونية</button>
+{zekr:"اللهم صلي وسلم على نبينا محمد",max:10},
 
-`
+{zekr:"أعوذ بكلمات الله التامات من شر ما خلق",max:3},
 
+{zekr:"لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير",max:100},
+
+{zekr:"الله لا إله إلا هو الحي القيوم لا تأخذه سنة ولا نوم له ما في السماوات وما في الأرض من ذا الذي يشفع عنده إلا بإذنه يعلم ما بين أيديهم وما خلفهم ولا يحيطون بشيء من علمه إلا بما شاء وسع كرسيه السماوات والأرض ولا يئوده حفظهما وهو العلي العظيم",max:1},
+  
+{zekr:"قل هو الله أحد * الله الصمد * لم يلد ولم يولد * ولم يكن كفوًا أحد",max:3},
+
+{zekr:"قل أعوذ برب الفلق * من شر ما خلق * ومن شر غاسق إذا وقب * ومن شر النفاسات في العقد * ومن شر حاسد إذا حسد",max:3},
+
+{zekr:"قل أعوذ برب الناس * ملك الناس * إله الناس * من شر الوسواس الخناس * الذي يوسوس في صدور الناس * من الجنة والناس",max:3},];
+
+// الصفحة الرئيسية
+function showHome() {
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    <h2>اختر الأذكار</h2>
+    <button class="main-btn" onclick="showAzkar('morning')">🌞 أذكار الصباح</button>
+    <button class="main-btn" onclick="showAzkar('evening')">🌙 أذكار المساء</button>
+    <br><br>
+    <button class="main-btn" onclick="showTasbeeh()">📿 المسبحة الإلكترونية</button>
+  `;
 }
 
-// Display Azkar
+// عرض الأذكار
 function showAzkar(type) {
   const list = type === "morning" ? morningAzkar : eveningAzkar;
   let html = "";
   let done = 0;
 
   list.forEach((item, i) => {
-    let current = 0; // always start from zero
+    let current = 0; // كل مرة يبدأ من صفر
     if (current >= item.max) done++;
     let percent = (current / item.max) * 100;
 
@@ -260,59 +232,11 @@ function showAzkar(type) {
   document.getElementById("app").innerHTML = html;
 }
 
-// Increment counter
+// زيادة العداد عند الضغط
 function increment(type, i, max) {
   const countEl = document.getElementById("count" + i);
   let current = parseInt(countEl.innerText);
   if (current < max) current++;
   countEl.innerText = current + " / " + max;
 
-  const percent = (current / max) * 100;
-  document.getElementById("bar" + i).style.width = percent + "%";
-
-  // Update completion percentage
-  const cards = document.querySelectorAll(".card");
-  let done = 0;
-  cards.forEach(card => {
-    const text = card.querySelector(".count").innerText;
-    const val = parseInt(text.split(" / ")[0]);
-    const maxVal = parseInt(text.split(" / ")[1]);
-    if (val >= maxVal) done++;
-  });
-  const percentDone = Math.round((done / cards.length) * 100);
-  document.querySelector("h3").innerText = "نسبة إنجاز الأذكار " + percentDone + "%";
-}
-
-// Tasbeeh (electronic counter)
-function showTasbeeh() {
-  const app = document.getElementById("app");
-  let count = 0; // always start from zero
-  app.innerHTML = `
-    <h2>📿 المسبحة</h2>
-    <h1 id="tas">${count}</h1>
-    <button onclick="incrementTasbeeh()">تسبيح</button>
-    <button onclick="resetTasbeeh()">تصفير</button>
-  `;
-}
-
-function incrementTasbeeh() {
-  const c = document.getElementById("tas");
-  let val = parseInt(c.innerText);
-  val++;
-  c.innerText = val;
-}
-
-function resetTasbeeh() {
-  const c = document.getElementById("tas");
-  c.innerText = 0;
-}
-
-// Toggle Dark Mode
-function toggleDark() {
-  document.body.classList.toggle("dark");
-}
-
-// Initialize Home Page
-showHome();
-
-</script>
+  const percent = (current / max) * 10…
