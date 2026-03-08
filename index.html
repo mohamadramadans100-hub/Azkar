@@ -232,86 +232,87 @@ document.getElementById("app").innerHTML=`
 
 }
 
-// عرض الأذكار مع عداد يبدأ من الصفر دائمًا
-function showAzkar(type){
-  let list = type === "morning" ? morning : evening
-  let html = ""
-  let done = 0
+// Display Azkar
+function showAzkar(type) {
+  const list = type === "morning" ? morningAzkar : eveningAzkar;
+  let html = "";
+  let done = 0;
 
   list.forEach((item, i) => {
-    let saved = 0  // يبدأ من الصفر دائمًا
-    if(saved >= item.max) done++
-
-    let percent = (saved/item.max)*100
+    let current = 0; // always start from zero
+    if (current >= item.max) done++;
+    let percent = (current / item.max) * 100;
 
     html += `
       <div class="card">
-        <p>${item.zekr}</p>
-        <div class="count" id="count${i}">${saved} / ${item.max}</div>
-        <button onclick="inc('${type}', ${i}, ${item.max})">ذكر</button>
+        <p>${item.text}</p>
+        <div class="count" id="count${i}">${current} / ${item.max}</div>
+        <button onclick="increment('${type}', ${i}, ${item.max})">ذكر</button>
         <div class="progress">
           <div class="bar" id="bar${i}" style="width:${percent}%"></div>
         </div>
       </div>
-    `
-  })
+    `;
+  });
 
-  let percentDone = Math.round(done / list.length * 100)
-  html = <h3>نسبة إنجاز الأذكار ${percentDone}%</h3> + html
-  document.getElementById("app").innerHTML = html
+  const percentDone = Math.round((done / list.length) * 100);
+  html = <h3>نسبة إنجاز الأذكار ${percentDone}%</h3> + html;
+  document.getElementById("app").innerHTML = html;
 }
 
-// زيادة العداد عند الضغط
-function inc(type, i, max){
-  let countEl = document.getElementById("count"+i)
-  let current = parseInt(countEl.innerText)
-  if(current < max) current++
-  countEl.innerText = current + " / " + max
-  let percent = (current / max) * 100
-  document.getElementById("bar"+i).style.width = percent + "%"
-  
-  // إعادة حساب نسبة الإنجاز
-  let cards = document.querySelectorAll(".card")
-  let done = 0
+// Increment counter
+function increment(type, i, max) {
+  const countEl = document.getElementById("count" + i);
+  let current = parseInt(countEl.innerText);
+  if (current < max) current++;
+  countEl.innerText = current + " / " + max;
+
+  const percent = (current / max) * 100;
+  document.getElementById("bar" + i).style.width = percent + "%";
+
+  // Update completion percentage
+  const cards = document.querySelectorAll(".card");
+  let done = 0;
   cards.forEach(card => {
-    let text = card.querySelector(".count").innerText
-    let val = parseInt(text.split(" / ")[0])
-    let maxVal = parseInt(text.split(" / ")[1])
-    if(val >= maxVal) done++
-  })
-  let percentDone = Math.round(done / cards.length * 100)
-  document.querySelector("h3").innerText = "نسبة إنجاز الأذكار " + percentDone + "%"
+    const text = card.querySelector(".count").innerText;
+    const val = parseInt(text.split(" / ")[0]);
+    const maxVal = parseInt(text.split(" / ")[1]);
+    if (val >= maxVal) done++;
+  });
+  const percentDone = Math.round((done / cards.length) * 100);
+  document.querySelector("h3").innerText = "نسبة إنجاز الأذكار " + percentDone + "%";
 }
 
-// المسبحة الإلكترونية
-function tasbeeh(){
-  let count = 0  // يبدأ من الصفر دائمًا
-  document.getElementById("app").innerHTML=`
+// Tasbeeh (electronic counter)
+function showTasbeeh() {
+  const app = document.getElementById("app");
+  let count = 0; // always start from zero
+  app.innerHTML = `
     <h2>📿 المسبحة</h2>
     <h1 id="tas">${count}</h1>
-    <button onclick="incTas()">تسبيح</button>
-    <button onclick="resetTas()">تصفير</button>
-  `
+    <button onclick="incrementTasbeeh()">تسبيح</button>
+    <button onclick="resetTasbeeh()">تصفير</button>
+  `;
 }
 
-// زيادة العداد في المسبحة
-function incTas(){
-  let c = document.getElementById("tas")
-  let val = parseInt(c.innerText)
-  val++
-  c.innerText = val
+function incrementTasbeeh() {
+  const c = document.getElementById("tas");
+  let val = parseInt(c.innerText);
+  val++;
+  c.innerText = val;
 }
 
-// إعادة تعيين المسبحة
-function resetTas(){
-  let c = document.getElementById("tas")
-  c.innerText = 0
+function resetTasbeeh() {
+  const c = document.getElementById("tas");
+  c.innerText = 0;
 }
 
-// الوضع الليلي
-function toggleDark(){
-  document.body.classList.toggle("dark")
+// Toggle Dark Mode
+function toggleDark() {
+  document.body.classList.toggle("dark");
 }
 
-// تشغيل الصفحة الرئيسية عند التحميل
-home()
+// Initialize Home Page
+showHome();
+
+</script>
