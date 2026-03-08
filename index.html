@@ -282,7 +282,7 @@ function inc(type,i,max){
 
 let key=type+i
 
-let val=parseInt(localStorage.getItem(key)||0)
+let saved= 0
 
 if(val<max){
 
@@ -316,7 +316,7 @@ document.getElementById("app").innerHTML=`
 
 function incTas(){
 
-let v=parseInt(localStorage.getItem("tasbeeh")||0)
+let saved= 0
 
 v++
 
@@ -328,7 +328,7 @@ tasbeeh()
 
 function resetTas(){
 
-sessionStorage.getItem("tasbeeh",0)
+let saved= 0
 
 tasbeeh()
 
@@ -354,5 +354,6 @@ home()
 
 </body>
 </html>
+
 
 
