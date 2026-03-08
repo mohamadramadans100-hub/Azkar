@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>أذكار الصباح والمساء</title>
 
 <style>
 
 body{
-font-family:Tahoma;
+font-family:Tajawal, Arial;
 direction:rtl;
 margin:0;
-background:#f2f4f8;
+background:#f3f5f9;
 text-align:center;
+transition:0.3s;
 }
 
 header{
 background:#2f74da;
 color:white;
 padding:20px;
-font-size:24px;
+font-size:22px;
 }
 
 .container{
@@ -30,7 +32,8 @@ padding:20px;
 }
 
 .main-btn{
-width:250px;
+
+width:260px;
 padding:18px;
 margin:10px;
 font-size:20px;
@@ -39,17 +42,28 @@ border-radius:14px;
 background:#2f74da;
 color:white;
 cursor:pointer;
+transition:0.2s;
+
+}
+
+.main-btn:active{
+
+transform:scale(0.95);
+
 }
 
 .card{
+
 background:white;
 padding:20px;
 margin:15px 0;
 border-radius:15px;
 box-shadow:0 5px 15px rgba(0,0,0,0.1);
+
 }
 
 button{
+
 background:#2f74da;
 color:white;
 border:none;
@@ -57,36 +71,60 @@ padding:10px 20px;
 font-size:18px;
 border-radius:10px;
 cursor:pointer;
+
 }
 
 .count{
+
 font-size:24px;
 margin:10px;
+
 }
 
 .progress{
+
 background:#ddd;
 height:10px;
 border-radius:10px;
+
 }
 
 .bar{
+
 height:10px;
 background:#2f74da;
 width:0%;
 border-radius:10px;
+
 }
 
 .dark{
+
 background:#121212;
 color:white;
+
+}
+
+.dark header{
+
+background:#1f1f1f;
+
 }
 
 .dark .card{
+
 background:#1e1e1e;
+
+}
+
+.top-buttons{
+
+margin-top:10px;
+
 }
 
 </style>
+
 </head>
 
 <body>
@@ -95,11 +133,13 @@ background:#1e1e1e;
 
 📿 أذكار الصباح والمساء
 
-<br><br>
+<div class="top-buttons">
 
 <button onclick="home()">الرئيسية</button>
 
 <button onclick="toggleDark()">🌙 الوضع الليلي</button>
+
+</div>
 
 </header>
 
@@ -117,7 +157,7 @@ const morning=[
 
 {zekr:"قل أعوذ برب الناس",max:3},
 
-{zekr:"بسم الله الذي لا يضر مع اسمه شيء",max:3},
+{zekr:"بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء",max:3},
 
 {zekr:"رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا",max:3},
 
@@ -135,7 +175,7 @@ const evening=[
 
 {zekr:"قل أعوذ برب الناس",max:3},
 
-{zekr:"بسم الله الذي لا يضر مع اسمه شيء",max:3},
+{zekr:"بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء",max:3},
 
 {zekr:"رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا",max:3},
 
@@ -153,8 +193,6 @@ document.getElementById("app").innerHTML=`
 
 <button class="main-btn" onclick="showAzkar('evening')">🌙 أذكار المساء</button>
 
-<br><br>
-
 <button class="main-btn" onclick="tasbeeh()">📿 المسبحة الإلكترونية</button>
 
 `
@@ -163,7 +201,7 @@ document.getElementById("app").innerHTML=`
 
 function showAzkar(type){
 
-let list= type==="morning" ? morning : evening
+let list=type==="morning"?morning:evening
 
 let html=""
 
@@ -171,7 +209,7 @@ let done=0
 
 list.forEach((item,i)=>{
 
-let saved=parseInt(localStorage.getItem(type+i) || 0)
+let saved=parseInt(localStorage.getItem(type+i)||0)
 
 if(saved>=item.max) done++
 
@@ -183,13 +221,13 @@ html+=`
 
 <p>${item.zekr}</p>
 
-<div class="count" id="count${i}">${saved} / ${item.max}</div>
+<div class="count">${saved} / ${item.max}</div>
 
 <button onclick="inc('${type}',${i},${item.max})">ذكر</button>
 
 <div class="progress">
 
-<div class="bar" id="bar${i}" style="width:${percent}%"></div>
+<div class="bar" style="width:${percent}%"></div>
 
 </div>
 
@@ -211,7 +249,7 @@ function inc(type,i,max){
 
 let key=type+i
 
-let val=parseInt(localStorage.getItem(key) || 0)
+let val=parseInt(localStorage.getItem(key)||0)
 
 if(val<max){
 
@@ -227,13 +265,13 @@ showAzkar(type)
 
 function tasbeeh(){
 
-let count=parseInt(localStorage.getItem("tasbeeh") || 0)
+let count=parseInt(localStorage.getItem("tasbeeh")||0)
 
 document.getElementById("app").innerHTML=`
 
 <h2>📿 المسبحة</h2>
 
-<h1 id="tas">${count}</h1>
+<h1>${count}</h1>
 
 <button onclick="incTas()">تسبيح</button>
 
@@ -245,7 +283,7 @@ document.getElementById("app").innerHTML=`
 
 function incTas(){
 
-let v=parseInt(localStorage.getItem("tasbeeh") || 0)
+let v=parseInt(localStorage.getItem("tasbeeh")||0)
 
 v++
 
@@ -266,6 +304,14 @@ tasbeeh()
 function toggleDark(){
 
 document.body.classList.toggle("dark")
+
+localStorage.setItem("darkMode",document.body.classList.contains("dark"))
+
+}
+
+if(localStorage.getItem("darkMode")=="true"){
+
+document.body.classList.add("dark")
 
 }
 
