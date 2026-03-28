@@ -26,7 +26,7 @@
     /* ---------------- Dark Mode ---------------- */
     body.dark {
       background: #0b1120;
-      color: #ffffff; /* جعل النص الافتراضي أبيض */
+      color: #ffffff;
     }
 
     body.dark .card {
@@ -36,7 +36,6 @@
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
     }
 
-    /* فرض اللون الأبيض على جميع النصوص في الوضع الليلي */
     body.dark .main-header h1 {
       background: none;
       -webkit-background-clip: unset;
@@ -61,7 +60,7 @@
 
     body.dark .count {
       background: #0f172f;
-      color: #ffffff; /* عداد التسبيح الداخلي أبيض */
+      color: #ffffff;
     }
 
     body.dark .progress-bg {
@@ -451,83 +450,68 @@
       if (activeBtn) activeBtn.classList.add('active');
     }
 
-   function renderAzkar(type) {
-  let list, counts, activeBtnId, sectionTitle;
-  
-  if (type === 'morning') {
-    list = morning; counts = morningCounts; activeBtnId = 'btnMorning'; sectionTitle = 'أذكار الصباح';
-    updateHeader('أذكار الصباح', 'حصن نفسك كل صباح', 'fa-sun');
-  } else if (type === 'evening') {
-    list = evening; counts = eveningCounts; activeBtnId = 'btnEvening'; sectionTitle = 'أذكار المساء';
-    updateHeader('أذكار المساء', 'حصن نفسك كل مساء', 'fa-moon');
-  } else if (type === 'prayer') {
-    list = prayer; counts = prayerCounts; activeBtnId = 'btnPrayer'; sectionTitle = 'أذكار الصلوات';
-    updateHeader('أذكار الصلوات', 'أذكار ما بعد الصلاة المكتوبة', 'fa-mosque');
-  } else if (type === 'quran') {
-    list = quran; counts = quranCounts; activeBtnId = 'btnQuran'; sectionTitle = 'أدعية من القرآن';
-    updateHeader('أدعية من القرآن', 'من جوامع الدعاء', 'fa-book-open');
-  }
-
-  let html = '';
-  let doneCount = 0;
-  
-  list.forEach((item, idx) => {
-    const current = counts[idx];
-    const percent = (current / item.max) * 100;
-    if (current >= item.max) doneCount++;
-    html += `
-      <div class="card" data-idx="${idx}">
-        <div class="zekr-text">${item.zekr}</div>
-        <div class="counter-section">
-          <span class="count"><i class="fas fa-check-circle"></i> ${current} / ${item.max}</span>
-          <button class="btn-primary" data-type="${type}" data-idx="${idx}"><i class="fas fa-pray"></i> ذكر</button>
-        </div>
-        <div class="progress-wrapper">
-          <div class="progress-bg"><div class="bar" style="width: ${percent}%;"></div></div>
-        </div>
-      </div>
-    `;
-  });
-  
-  const totalPercent = Math.round((doneCount / list.length) * 100) || 0;
-  const headerHtml = `<div class="global-progress"><i class="fas fa-chart-simple"></i> إنجاز ${sectionTitle}: ${totalPercent}% (${doneCount}/${list.length})</div>`;
-  
-  document.getElementById('app').innerHTML = headerHtml + html;
-  
-  document.querySelectorAll('.btn-primary').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const idx = parseInt(btn.dataset.idx);
-      const t = btn.dataset.type;
+    function renderAzkar(type) {
+      let list, counts, activeBtnId, sectionTitle;
       
-      if (t === 'morning' && morningCounts[idx] < morning[idx].max) morningCounts[idx]++;
-      else if (t === 'evening' && eveningCounts[idx] < evening[idx].max) eveningCounts[idx]++;
-      else if (t === 'prayer' && prayerCounts[idx] < prayer[idx].max) prayerCounts[idx]++;
-      else if (t === 'quran' && quranCounts[idx] < quran[idx].max) quranCounts[idx]++;
-      
-      renderAzkar(t);
-      saveCounts();
-    });
-  });
-  
-  updateActiveToolbarButton(activeBtnId);
-  // تم حذف سطر window.scrollTo من هنا لضمان ثبات الصفحة
-}
+      if (type === 'morning') {
+        list = morning; counts = morningCounts; activeBtnId = 'btnMorning'; sectionTitle = 'أذكار الصباح';
+        updateHeader('أذكار الصباح', 'حصن نفسك كل صباح', 'fa-sun');
+      } else if (type === 'evening') {
+        list = evening; counts = eveningCounts; activeBtnId = 'btnEvening'; sectionTitle = 'أذكار المساء';
+        updateHeader('أذكار المساء', 'حصن نفسك كل مساء', 'fa-moon');
+      } else if (type === 'prayer') {
+        list = prayer; counts = prayerCounts; activeBtnId = 'btnPrayer'; sectionTitle = 'أذكار الصلوات';
+        updateHeader('أذكار الصلوات', 'أذكار ما بعد الصلاة المكتوبة', 'fa-mosque');
+      } else if (type === 'quran') {
+        list = quran; counts = quranCounts; activeBtnId = 'btnQuran'; sectionTitle = 'أدعية من القرآن';
+        updateHeader('أدعية من القرآن', 'من جوامع الدعاء', 'fa-book-open');
+      }
 
-// تعديل أزرار القائمة السفلية لتصعد للأعلى فقط عند تغيير القسم بالكامل
-function initUI() {
-  loadCounts();
-  const savedDark = localStorage.getItem('darkMode') === 'true';
-  if (savedDark) document.body.classList.add('dark');
-  renderHome();
-  
-  document.getElementById('btnHome').addEventListener('click', () => { renderHome(); window.scrollTo(0,0); });
-  document.getElementById('btnMorning').addEventListener('click', () => { renderAzkar('morning'); window.scrollTo(0,0); });
-  document.getElementById('btnEvening').addEventListener('click', () => { renderAzkar('evening'); window.scrollTo(0,0); });
-  document.getElementById('btnPrayer').addEventListener('click', () => { renderAzkar('prayer'); window.scrollTo(0,0); });
-  document.getElementById('btnQuran').addEventListener('click', () => { renderAzkar('quran'); window.scrollTo(0,0); });
-  document.getElementById('btnTasbeeh').addEventListener('click', () => { renderTasbeeh(); window.scrollTo(0,0); });
-  document.getElementById('btnDark').addEventListener('click', () => toggleDarkMode());
-  
+      let html = '';
+      let doneCount = 0;
+      
+      list.forEach((item, idx) => {
+        const current = counts[idx];
+        const percent = (current / item.max) * 100;
+        if (current >= item.max) doneCount++;
+        html += `
+          <div class="card" data-idx="${idx}">
+            <div class="zekr-text">${item.zekr}</div>
+            <div class="counter-section">
+              <span class="count"><i class="fas fa-check-circle"></i> ${current} / ${item.max}</span>
+              <button class="btn-primary" data-type="${type}" data-idx="${idx}"><i class="fas fa-pray"></i> ذكر</button>
+            </div>
+            <div class="progress-wrapper">
+              <div class="progress-bg"><div class="bar" style="width: ${percent}%;"></div></div>
+            </div>
+          </div>
+        `;
+      });
+      
+      const totalPercent = Math.round((doneCount / list.length) * 100) || 0;
+      const headerHtml = `<div class="global-progress"><i class="fas fa-chart-simple"></i> إنجاز ${sectionTitle}: ${totalPercent}% (${doneCount}/${list.length})</div>`;
+      
+      document.getElementById('app').innerHTML = headerHtml + html;
+      
+      document.querySelectorAll('.btn-primary').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt(btn.dataset.idx);
+          const t = btn.dataset.type;
+          
+          if (t === 'morning' && morningCounts[idx] < morning[idx].max) morningCounts[idx]++;
+          else if (t === 'evening' && eveningCounts[idx] < evening[idx].max) eveningCounts[idx]++;
+          else if (t === 'prayer' && prayerCounts[idx] < prayer[idx].max) prayerCounts[idx]++;
+          else if (t === 'quran' && quranCounts[idx] < quran[idx].max) quranCounts[idx]++;
+          
+          renderAzkar(t);
+          saveCounts();
+        });
+      });
+      
+      updateActiveToolbarButton(activeBtnId);
+      // تم حذف سطر window.scrollTo من هنا لضمان ثبات الصفحة أمامك
+    }
+
     function renderTasbeeh() {
       updateHeader('المسبحة الإلكترونية', 'سبّح بحمد ربك', 'fa-praying-hands');
       const html = `
