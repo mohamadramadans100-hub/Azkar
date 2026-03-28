@@ -1,134 +1,140 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>أذكار المسلم</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    body { font-family: sans-serif; direction: rtl; background: #f8fafc; padding-bottom: 80px; transition: 0.3s; }
-    body.dark { background: #0b1120; color: #fff; }
-    .main-header { text-align: center; padding: 20px; }
-    .container { max-width: 600px; margin: 0 auto; padding: 0 20px; }
-    .card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-    body.dark .card { background: #1e293b; border: 1px solid #334155; }
-    .zekr-text { font-size: 1.1rem; margin-bottom: 15px; line-height: 1.6; }
-    .counter-section { display: flex; justify-content: space-between; align-items: center; }
-    .count-display { font-weight: bold; background: #eef2ff; padding: 5px 15px; border-radius: 20px; color: #1e40af; }
-    body.dark .count-display { background: #0f172a; color: #fff; }
-    .btn-primary { background: #2563eb; color: #fff; border: none; padding: 10px 25px; border-radius: 30px; cursor: pointer; font-weight: bold; }
-    .progress-bg { background: #e2e8f0; height: 8px; border-radius: 10px; margin-top: 15px; overflow: hidden; }
-    .bar { background: #3b82f6; height: 100%; width: 0%; transition: width 0.3s; }
-    .floating-toolbar { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: #1e293b; padding: 10px; border-radius: 40px; display: flex; gap: 10px; z-index: 1000; }
-    .tool-btn { background: none; border: none; color: #fff; cursor: pointer; font-size: 0.9rem; display: flex; flex-direction: column; align-items: center; }
-    .tool-btn i { font-size: 1.2rem; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أذكار المسلم</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --text: #1e293b; --card-bg: #ffffff; }
+        body.dark { --bg: #0b1120; --text: #ffffff; --card-bg: #1e293b; }
+        
+        body { font-family: sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-bottom: 100px; transition: 0.3s; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .main-header { text-align: center; padding: 20px; }
+        .card { background: var(--card-bg); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        
+        .zekr-text { font-size: 1.15rem; line-height: 1.7; margin-bottom: 15px; }
+        .counter-section { display: flex; justify-content: space-between; align-items: center; }
+        
+        /* تصميم الزر الموحد */
+        .btn-primary { 
+            background: linear-gradient(105deg, #2563eb, #1d4ed8); 
+            color: white; border: none; padding: 12px 25px; 
+            border-radius: 50px; cursor: pointer; font-weight: bold;
+            display: inline-flex; align-items: center; gap: 8px;
+            touch-action: manipulation; /* لمنع الزووم عند الضغط المتكرر */
+        }
+
+        .count-badge { background: #eef2ff; color: #1e40af; padding: 5px 15px; border-radius: 20px; font-weight: bold; }
+        body.dark .count-badge { background: #0f172a; color: #fff; }
+
+        .progress-bg { background: #e2e8f0; height: 8px; border-radius: 10px; margin-top: 15px; overflow: hidden; }
+        .bar { background: #3b82f6; height: 100%; width: 0%; transition: width 0.3s ease; }
+
+        /* شريط التنقل السفلي */
+        .toolbar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #1e293b; padding: 10px 20px; border-radius: 50px; display: flex; gap: 15px; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .tool-btn { background: none; border: none; color: #cbd5e1; cursor: pointer; display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; }
+        .tool-btn.active { color: #3b82f6; }
+        .tool-btn i { font-size: 1.2rem; margin-bottom: 3px; }
+    </style>
 </head>
 <body>
 
 <div class="main-header">
-  <h1 id="mainTitle">أذكار المسلم</h1>
-  <p id="sectionProgress"></p>
+    <h1 id="pageTitle">أذكار المسلم</h1>
+    <p id="pageSubtitle">اختر القسم وابدأ الذكر</p>
 </div>
 
 <div class="container" id="app"></div>
 
-<div class="floating-toolbar">
-  <button class="tool-btn" onclick="renderHome()"><i class="fas fa-home"></i><span>الرئيسية</span></button>
-  <button class="tool-btn" onclick="renderAzkar('morning')"><i class="fas fa-sun"></i><span>الصباح</span></button>
-  <button class="tool-btn" onclick="renderAzkar('evening')"><i class="fas fa-moon"></i><span>المساء</span></button>
-  <button class="tool-btn" onclick="renderAzkar('prayer')"><i class="fas fa-mosque"></i><span>الصلوات</span></button>
-  <button class="tool-btn" onclick="toggleDark()"><i class="fas fa-adjust"></i><span>ليلي</span></button>
+<div class="toolbar">
+    <button class="tool-btn" onclick="renderHome()"><i class="fas fa-home"></i>الرئيسية</button>
+    <button class="tool-btn" onclick="loadSection('morning')"><i class="fas fa-sun"></i>الصباح</button>
+    <button class="tool-btn" onclick="loadSection('evening')"><i class="fas fa-moon"></i>المساء</button>
+    <button class="tool-btn" onclick="loadSection('prayer')"><i class="fas fa-mosque"></i>الصلوات</button>
+    <button class="tool-btn" onclick="loadSection('tasbeeh')"><i class="fas fa-fingerprint"></i>المسبحة</button>
+    <button class="tool-btn" onclick="toggleDark()"><i class="fas fa-moon"></i>ليلي</button>
 </div>
 
 <script>
-  const data = {
-    morning: [
-      { z: "أصبحنا وأصبح الملك لله والحمد لله..", max: 1 },
-      { z: "سبحان الله وبحمده (100 مرة)", max: 100 },
-      { z: "اللهم بك أصبحنا وبك أمسينا..", max: 1 }
-    ],
-    evening: [
-      { z: "أمسينا وأمسى الملك لله والحمد لله..", max: 1 },
-      { z: "أعوذ بكلمات الله التامات من شر ما خلق", max: 3 }
-    ],
-    prayer: [
-      { z: "أستغفر الله (3 مرات)", max: 3 },
-      { z: "اللهم أنت السلام ومنك السلام..", max: 1 }
-    ]
-  };
+    const azkarData = {
+        morning: { title: "أذكار الصباح", items: [{t: "أصبحنا وأصبح الملك لله", m: 1}, {t: "سبحان الله وبحمده", m: 100}] },
+        evening: { title: "أذكار المساء", items: [{t: "أمسينا وأمسى الملك لله", m: 1}, {t: "يا حي يا قيوم برحمتك أستغيث", m: 3}] },
+        prayer: { title: "أذكار الصلوات", items: [{t: "أستغفر الله", m: 3}, {t: "اللهم أنت السلام", m: 1}] }
+    };
 
-  let counts = { morning: [0,0,0], evening: [0,0], prayer: [0,0] };
-  let currentSection = '';
+    let userCounts = { morning: [0,0], evening: [0,0], prayer: [0,0], tasbeeh: 0 };
+    let activeSection = '';
 
-  function renderAzkar(section) {
-    currentSection = section;
-    const list = data[section];
-    const sectionTitle = section === 'morning' ? 'أذكار الصباح' : section === 'evening' ? 'أذكار المساء' : 'أذكار الصلوات';
-    document.getElementById('mainTitle').innerText = sectionTitle;
-    
-    let html = '';
-    list.forEach((item, idx) => {
-      const c = counts[section][idx];
-      const p = (c / item.max) * 100;
-      html += `
-        <div class="card" id="card-${idx}">
-          <div class="zekr-text">${item.z}</div>
-          <div class="counter-section">
-            <span class="count-display" id="count-${idx}">${c} / ${item.max}</span>
-            <button class="btn-primary" onclick="doZekr(${idx})">ذكر</button>
-          </div>
-          <div class="progress-bg"><div class="bar" id="bar-${idx}" style="width: ${p}%"></div></div>
-        </div>
-      `;
-    });
-    document.getElementById('app').innerHTML = html;
-    updateGlobalProgress();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  // الوظيفة الأساسية: التحديث في المكان بدون Scroll
-  window.doZekr = function(idx) {
-    const section = currentSection;
-    const item = data[section][idx];
-    
-    if (counts[section][idx] < item.max) {
-      counts[section][idx]++;
-      
-      // تحديث العناصر في الـ HTML مباشرة بدون إعادة رسم الصفحة
-      const countEl = document.getElementById(`count-${idx}`);
-      const barEl = document.getElementById(`bar-${idx}`);
-      
-      if (countEl) countEl.innerText = `${counts[section][idx]} / ${item.max}`;
-      if (barEl) barEl.style.width = `${(counts[section][idx] / item.max) * 100}%`;
-      
-      updateGlobalProgress();
+    function loadSection(section) {
+        activeSection = section;
+        if (section === 'tasbeeh') return renderTasbeeh();
+        
+        const data = azkarData[section];
+        document.getElementById('pageTitle').innerText = data.title;
+        
+        let html = '';
+        data.items.forEach((item, i) => {
+            const current = userCounts[section][i];
+            const progress = (current / item.m) * 100;
+            html += `
+                <div class="card">
+                    <div class="zekr-text">${item.t}</div>
+                    <div class="counter-section">
+                        <span class="count-badge" id="num-${i}">${current} / ${item.m}</span>
+                        <button class="btn-primary" onclick="pressZekr(event, ${i})">
+                            <i class="fas fa-plus"></i> ذكر
+                        </button>
+                    </div>
+                    <div class="progress-bg"><div class="bar" id="bar-${i}" style="width: ${progress}%"></div></div>
+                </div>
+            `;
+        });
+        document.getElementById('app').innerHTML = html;
+        window.scrollTo(0,0); // فقط عند فتح القسم لأول مرة
     }
-  };
 
-  function updateGlobalProgress() {
-    const section = currentSection;
-    if (!data[section]) return;
-    const done = counts[section].filter((c, i) => c >= data[section][i].max).length;
-    document.getElementById('sectionProgress').innerText = `تم إنجاز ${done} من ${data[section].length}`;
-  }
+    // الدالة السحرية اللي هتمنع القفز لأعلى الصفحة
+    window.pressZekr = function(event, index) {
+        event.preventDefault(); // يمنع أي حركة تلقائية للمتصفح
+        
+        const section = activeSection;
+        const max = azkarData[section].items[index].m;
+        
+        if (userCounts[section][index] < max) {
+            userCounts[section][index]++;
+            
+            // تحديث العناصر في مكانها فقط (Targeted Update)
+            const countEl = document.getElementById(`num-${index}`);
+            const barEl = document.getElementById(`bar-${index}`);
+            
+            countEl.innerText = `${userCounts[section][index]} / ${max}`;
+            barEl.style.width = `${(userCounts[section][index] / max) * 100}%`;
+        }
+    };
 
-  function renderHome() {
-    document.getElementById('mainTitle').innerText = "أذكار المسلم";
-    document.getElementById('sectionProgress').innerText = "";
-    document.getElementById('app').innerHTML = `
-      <div class="card" style="text-align:center">
-        <h3>اختر قسم الأذكار</h3>
-        <button class="btn-primary" style="margin:5px" onclick="renderAzkar('morning')">الصباح</button>
-        <button class="btn-primary" style="margin:5px" onclick="renderAzkar('evening')">المساء</button>
-        <button class="btn-primary" style="margin:5px" onclick="renderAzkar('prayer')">الصلوات</button>
-      </div>
-    `;
-  }
+    function renderTasbeeh() {
+        document.getElementById('pageTitle').innerText = "المسبحة الإلكترونية";
+        document.getElementById('app').innerHTML = `
+            <div class="card" style="text-align:center">
+                <div style="font-size:4rem; margin:20px 0;" id="t-val">${userCounts.tasbeeh}</div>
+                <button class="btn-primary" style="padding:20px 50px; font-size:1.2rem" onclick="userCounts.tasbeeh++; document.getElementById('t-val').innerText=userCounts.tasbeeh;">
+                    <i class="fas fa-fingerprint"></i> سبّح
+                </button>
+                <button class="btn-primary" style="background:#64748b; margin-top:10px" onclick="userCounts.tasbeeh=0; document.getElementById('t-val').innerText=0;">تصفير</button>
+            </div>
+        `;
+    }
 
-  function toggleDark() { document.body.classList.toggle('dark'); }
+    function renderHome() {
+        document.getElementById('pageTitle').innerText = "أذكار المسلم";
+        document.getElementById('app').innerHTML = `<div class="card" style="text-align:center"><h3>تقبل الله منا ومنكم</h3><p>اختر من القائمة بالأسفل لبدء الأذكار</p></div>`;
+    }
 
-  renderHome();
+    function toggleDark() { document.body.classList.toggle('dark'); }
+
+    renderHome();
 </script>
 
 </body>
