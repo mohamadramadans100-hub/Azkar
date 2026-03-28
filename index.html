@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-  <title> | أذكار الصباح والمساء</title>
+  <title>أذكار المسلم</title>
   <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhvQvRCN-YVeGSselB2MPL-WULCMsGItS-VYN8X6RkxoevWPbm8yyMwpiAOhZ9ZJnplfqOAE4Eeyp17F1ClXIgv-IQ43FIihvswBYNkDl4aJgqZUwNNQOAzDQzWcIcXxQNLvEOwsYbD3LqYDVLfoMw6rYi9RWF0UEkZVMz9MxZldQsy7uXxjzX8GrHPMgo/s1024/105827.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -23,9 +23,10 @@
       padding-bottom: 90px;
     }
 
-    /* dark mode premium */
+    /* ---------------- Dark Mode ---------------- */
     body.dark {
       background: #0b1120;
+      color: #ffffff; /* جعل النص الافتراضي أبيض */
     }
 
     body.dark .card {
@@ -35,19 +36,50 @@
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
     }
 
-    body.dark .card p {
-      color: #e2e8f0;
+    /* فرض اللون الأبيض على جميع النصوص في الوضع الليلي */
+    body.dark .main-header h1 {
+      background: none;
+      -webkit-background-clip: unset;
+      -webkit-text-fill-color: unset;
+      color: #ffffff;
+    }
+    
+    body.dark .main-header p,
+    body.dark .card p,
+    body.dark .card h2,
+    body.dark .tasbeeh-card h3,
+    body.dark .zekr-text {
+      color: #ffffff !important;
+    }
+
+    body.dark .tasbeeh-number {
+      background: none;
+      -webkit-background-clip: unset;
+      -webkit-text-fill-color: unset;
+      color: #ffffff;
     }
 
     body.dark .count {
-      color: #a0c4ff;
+      background: #0f172f;
+      color: #ffffff; /* عداد التسبيح الداخلي أبيض */
     }
 
     body.dark .progress-bg {
       background: #1e2a3e;
     }
 
-    /* floating toolbar design PRO */
+    body.dark .global-progress {
+      background: rgba(17, 24, 39, 0.95);
+      border-color: #1f2a48;
+      color: #ffffff;
+    }
+
+    body.dark .btn-secondary {
+      background: #1e293b;
+      color: #ffffff;
+    }
+
+    /* ---------------- Floating Toolbar ---------------- */
     .floating-toolbar {
       position: fixed;
       bottom: 20px;
@@ -69,11 +101,11 @@
       border: 1px solid rgba(255, 255, 255, 0.18);
       transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
       overflow-x: auto;
-      scrollbar-width: none; /* Firefox */
+      scrollbar-width: none;
     }
 
     .floating-toolbar::-webkit-scrollbar {
-      display: none; /* Chrome, Safari */
+      display: none;
     }
 
     .floating-toolbar:hover {
@@ -88,7 +120,6 @@
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
     }
 
-    /* Premium button style inside toolbar */
     .tool-btn {
       background: transparent;
       border: none;
@@ -119,7 +150,6 @@
       font-weight: 550;
     }
 
-    /* Active state - vibrant gradient */
     .tool-btn.active {
       background: linear-gradient(125deg, #2b6ef0, #1a4fcf);
       color: white;
@@ -157,22 +187,7 @@
       }
     }
 
-    body.dark .count {
-      background: #0f172f;
-      color: #7aa9ff;
-    }
-
-    body.dark .global-progress {
-      background: #111827;
-      border-color: #1f2a48;
-      color: #e0e7ff;
-    }
-
-    body.dark .btn-secondary {
-      background: #1e293b;
-      color: #cbd5e6;
-    }
-
+    /* ---------------- Headers & Cards ---------------- */
     .main-header {
       text-align: center;
       padding: 30px 20px 20px;
@@ -190,13 +205,7 @@
       display: inline-flex;
       align-items: center;
       gap: 12px;
-    }
-
-    body.dark .main-header h1 {
-      background: linear-gradient(135deg, #90cdf4, #5a9eff);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
+      transition: all 0.3s ease;
     }
 
     .main-header p {
@@ -204,10 +213,7 @@
       margin-top: 8px;
       font-size: 0.9rem;
       font-weight: 500;
-    }
-
-    body.dark .main-header p {
-      color: #94a3b8;
+      transition: all 0.3s ease;
     }
 
     .container {
@@ -235,10 +241,6 @@
       text-align: right;
       word-break: break-word;
       font-family: 'Inter', 'Tajawal', serif;
-    }
-
-    body.dark .zekr-text {
-      color: #e2e8f0;
     }
 
     .counter-section {
@@ -274,6 +276,7 @@
       box-shadow: 0 6px 14px rgba(37, 99, 235, 0.25);
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       font-family: inherit;
     }
@@ -298,7 +301,6 @@
       transition: width 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     }
 
-    /* تثبيت العداد في الأعلى */
     .global-progress {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
@@ -319,19 +321,11 @@
       z-index: 999;
     }
 
-    body.dark .global-progress {
-      background: rgba(17, 24, 39, 0.95);
-    }
-
     .tasbeeh-card {
       text-align: center;
       background: white;
       border-radius: 48px;
       padding: 2rem;
-    }
-
-    body.dark .tasbeeh-card {
-      background: rgba(18, 25, 45, 0.9);
     }
 
     .tasbeeh-number {
@@ -343,13 +337,6 @@
       color: transparent;
       margin: 20px 0;
       font-feature-settings: "tnum";
-    }
-
-    body.dark .tasbeeh-number {
-      background: linear-gradient(135deg, #90cdf4, #5a9eff);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
     }
 
     .btn-group {
@@ -377,8 +364,8 @@
 </head>
 <body>
   <div class="main-header">
-    <h1><i class="fas fa-star-and-crescent"></i> أذكار المسلم</h1>
-    <p>أذكار | تسبيح | طمأنينة</p>
+    <h1 id="mainTitle"><i class="fas fa-star-and-crescent"></i> أذكار المسلم</h1>
+    <p id="mainSubtitle">أذكار | تسبيح | طمأنينة</p>
   </div>
 
   <div class="container" id="app"></div>
@@ -400,7 +387,6 @@
       { zekr: "قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ...", max: 3 },
       { zekr: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ...", max: 1 },
       { zekr: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ عدد خلقه، ورضا نفسه، وزنة عرشه، ومداد كلماته", max: 3 }
-      // يمكنك إضافة باقي الأذكار كما كانت في كودك الأصلي
     ];
 
     const evening = [
@@ -408,10 +394,8 @@
       { zekr: "قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ...", max: 3 },
       { zekr: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ...", max: 1 },
       { zekr: "أعوذ بكلمات الله التامات من شر ما خلق", max: 3 }
-      // يمكنك إضافة باقي الأذكار كما كانت في كودك الأصلي
     ];
 
-    // القسم الجديد: أذكار الصلوات
     const prayer = [
       { zekr: "سُبْحَانَ اللَّهِ", max: 33 },
       { zekr: "الْحَمْدُ لِلَّهِ", max: 33 },
@@ -419,7 +403,6 @@
       { zekr: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ", max: 1 }
     ];
 
-    // القسم الجديد: أدعية من القرآن
     const quran = [
       { zekr: "سُبْحَانَ اللَّهِ", max: 33 },
       { zekr: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ", max: 1 },
@@ -430,7 +413,6 @@
     let eveningCounts = new Array(evening.length).fill(0);
     let prayerCounts = new Array(prayer.length).fill(0);
     let quranCounts = new Array(quran.length).fill(0);
-    let currentType = 'home';
     let tasbeehValue = 0;
 
     function saveCounts() {
@@ -455,6 +437,11 @@
       if (savedT) tasbeehValue = parseInt(savedT) || 0;
     }
 
+    function updateHeader(title, subtitle, iconClass) {
+      document.getElementById('mainTitle').innerHTML = `<i class="fas ${iconClass}"></i> ${title}`;
+      document.getElementById('mainSubtitle').innerText = subtitle;
+    }
+
     function updateActiveToolbarButton(activeId) {
       ['btnHome', 'btnMorning', 'btnEvening', 'btnPrayer', 'btnQuran', 'btnTasbeeh'].forEach(id => {
         const btn = document.getElementById(id);
@@ -465,17 +452,20 @@
     }
 
     function renderAzkar(type) {
-      currentType = type;
       let list, counts, activeBtnId, sectionTitle;
       
       if (type === 'morning') {
         list = morning; counts = morningCounts; activeBtnId = 'btnMorning'; sectionTitle = 'أذكار الصباح';
+        updateHeader('أذكار الصباح', 'حصن نفسك كل صباح', 'fa-sun');
       } else if (type === 'evening') {
         list = evening; counts = eveningCounts; activeBtnId = 'btnEvening'; sectionTitle = 'أذكار المساء';
+        updateHeader('أذكار المساء', 'حصن نفسك كل مساء', 'fa-moon');
       } else if (type === 'prayer') {
-        list = prayer; counts = prayerCounts; activeBtnId = 'btnPrayer'; sectionTitle = 'أذكار ما بعد الصلاة';
+        list = prayer; counts = prayerCounts; activeBtnId = 'btnPrayer'; sectionTitle = 'أذكار الصلوات';
+        updateHeader('أذكار الصلوات', 'أذكار ما بعد الصلاة المكتوبة', 'fa-mosque');
       } else if (type === 'quran') {
         list = quran; counts = quranCounts; activeBtnId = 'btnQuran'; sectionTitle = 'أدعية من القرآن';
+        updateHeader('أدعية من القرآن', 'من جوامع الدعاء', 'fa-book-open');
       }
 
       let html = '';
@@ -524,7 +514,7 @@
     }
 
     function renderTasbeeh() {
-      currentType = 'tasbeeh';
+      updateHeader('المسبحة الإلكترونية', 'سبّح بحمد ربك', 'fa-praying-hands');
       const html = `
         <div class="card tasbeeh-card" style="text-align:center;">
           <i class="fas fa-praying-hands" style="font-size: 2.5rem; color: #2f74da;"></i>
@@ -543,7 +533,7 @@
     }
 
     function renderHome() {
-      currentType = 'home';
+      updateHeader('أذكار المسلم', 'أذكار | تسبيح | طمأنينة', 'fa-star-and-crescent');
       document.getElementById('app').innerHTML = `
         <div class="card" style="text-align:center; padding: 2.2rem;">
           <i class="fas fa-book-quran" style="font-size: 3rem; color:#2563eb; margin-bottom: 1rem;"></i>
@@ -554,7 +544,7 @@
             <button id="homeEveningBtn" class="btn-primary" style="flex: 1 1 40%;"><i class="fas fa-moon"></i> أذكار المساء</button>
             <button id="homePrayerBtn" class="btn-primary" style="flex: 1 1 40%;"><i class="fas fa-mosque"></i> أذكار الصلوات</button>
             <button id="homeQuranBtn" class="btn-primary" style="flex: 1 1 40%;"><i class="fas fa-book-open"></i> أدعية القرآن</button>
-            <button id="homeTasbeehBtn" class="btn-secondary" style="flex: 1 1 85%; margin-top: 10px;"><i class="fas fa-praying-hands"></i> المسبحة الإلكترونية</button>
+            <button id="homeTasbeehBtn" class="btn-primary" style="flex: 1 1 85%; margin-top: 10px;"><i class="fas fa-praying-hands"></i> المسبحة الإلكترونية</button>
           </div>
         </div>
       `;
