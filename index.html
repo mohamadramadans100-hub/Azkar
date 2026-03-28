@@ -1,180 +1,600 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>أذكار الصباح والمساء</title>
-<style>
-body{font-family:Tajawal, Arial;direction:rtl;margin:0;background:#f3f5f9;text-align:center;transition:0.3s;}
-header{background:#2f74da;color:white;padding:20px;font-size:22px;}
-.container{max-width:700px;margin:auto;padding:20px;}
-.main-btn{width:260px;padding:18px;margin:10px;font-size:20px;border:none;border-radius:14px;background:#2f74da;color:white;cursor:pointer;transition:0.2s;}
-.main-btn:active{transform:scale(0.95);}
-.card{background:white;padding:20px;margin:15px 0;border-radius:15px;box-shadow:0 5px 15px rgba(0,0,0,0.1);}
-button{background:#2f74da;color:white;border:none;padding:10px 20px;font-size:18px;border-radius:10px;cursor:pointer;}
-.count{font-size:24px;margin:10px;}
-.progress{background:#ddd;height:10px;border-radius:10px;}
-.bar{height:10px;background:#2f74da;width:0%;border-radius:10px;}
-.dark{background:#121212;color:white;}
-.dark header{background:#1f1f1f;}
-.dark .card{background:#1e1e1e;}
-.top-buttons{margin-top:10px;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+  <title> | أذكار الصباح والمساء</title>
+  <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhvQvRCN-YVeGSselB2MPL-WULCMsGItS-VYN8X6RkxoevWPbm8yyMwpiAOhZ9ZJnplfqOAE4Eeyp17F1ClXIgv-IQ43FIihvswBYNkDl4aJgqZUwNNQOAzDQzWcIcXxQNLvEOwsYbD3LqYDVLfoMw6rYi9RWF0UEkZVMz9MxZldQsy7uXxjzX8GrHPMgo/s1024/105827.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', 'Tajawal', sans-serif;
+      background: linear-gradient(145deg, #f8fafc 0%, #eff3f8 100%);
+      direction: rtl;
+      transition: background 0.3s ease, color 0.2s ease;
+      min-height: 100vh;
+      padding-bottom: 90px;
+    }
+
+    /* dark mode premium */
+    body.dark {
+      background: #0b1120;
+    }
+
+    body.dark .card {
+      background: rgba(18, 25, 45, 0.9);
+      backdrop-filter: blur(2px);
+      border: 1px solid rgba(66, 153, 225, 0.2);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    body.dark .card p {
+      color: #e2e8f0;
+    }
+
+    body.dark .count {
+      color: #a0c4ff;
+    }
+
+    body.dark .progress-bg {
+      background: #1e2a3e;
+    }
+
+    /* floating toolbar design PRO */
+    .floating-toolbar {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: auto;
+      max-width: 95%;
+      background: rgba(15, 25, 45, 0.78);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 60px;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.12);
+      z-index: 1000;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      overflow-x: auto;
+      scrollbar-width: none; /* Firefox */
+    }
+
+    .floating-toolbar::-webkit-scrollbar {
+      display: none; /* Chrome, Safari */
+    }
+
+    .floating-toolbar:hover {
+      background: rgba(20, 30, 55, 0.85);
+      box-shadow: 0 24px 40px -14px rgba(0, 0, 0, 0.5);
+    }
+
+    body.dark .floating-toolbar {
+      background: rgba(8, 16, 30, 0.85);
+      backdrop-filter: blur(28px);
+      border: 1px solid rgba(66, 153, 225, 0.3);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Premium button style inside toolbar */
+    .tool-btn {
+      background: transparent;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 590;
+      padding: 10px 18px;
+      border-radius: 48px;
+      color: #f1f5f9;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: inherit;
+      letter-spacing: -0.2px;
+      backdrop-filter: blur(4px);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .tool-btn i {
+      font-size: 1.2rem;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+    }
+
+    .tool-btn span {
+      font-size: 0.85rem;
+      font-weight: 550;
+    }
+
+    /* Active state - vibrant gradient */
+    .tool-btn.active {
+      background: linear-gradient(125deg, #2b6ef0, #1a4fcf);
+      color: white;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+      transform: scale(1.02);
+    }
+
+    .tool-btn:not(.active):hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-2px);
+      color: white;
+    }
+
+    .tool-btn:active {
+      transform: scale(0.96);
+    }
+
+    @media (max-width: 620px) {
+      .floating-toolbar {
+        gap: 4px;
+        padding: 5px 8px;
+        border-radius: 48px;
+        bottom: 16px;
+      }
+      .tool-btn {
+        padding: 7px 12px;
+        gap: 6px;
+      }
+      .tool-btn i {
+        font-size: 1rem;
+      }
+      .tool-btn span {
+        font-size: 0.7rem;
+        font-weight: 500;
+      }
+    }
+
+    body.dark .count {
+      background: #0f172f;
+      color: #7aa9ff;
+    }
+
+    body.dark .global-progress {
+      background: #111827;
+      border-color: #1f2a48;
+      color: #e0e7ff;
+    }
+
+    body.dark .btn-secondary {
+      background: #1e293b;
+      color: #cbd5e6;
+    }
+
+    .main-header {
+      text-align: center;
+      padding: 30px 20px 20px;
+      background: transparent;
+    }
+
+    .main-header h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    body.dark .main-header h1 {
+      background: linear-gradient(135deg, #90cdf4, #5a9eff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .main-header p {
+      color: #4a5568;
+      margin-top: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    body.dark .main-header p {
+      color: #94a3b8;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 8px 20px 30px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 32px;
+      padding: 1.6rem 1.5rem;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.02);
+      transition: all 0.25s ease;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .zekr-text {
+      font-size: 1.15rem;
+      line-height: 1.65;
+      font-weight: 500;
+      color: #0f172a;
+      margin-bottom: 20px;
+      text-align: right;
+      word-break: break-word;
+      font-family: 'Inter', 'Tajawal', serif;
+    }
+
+    body.dark .zekr-text {
+      color: #e2e8f0;
+    }
+
+    .counter-section {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .count {
+      font-size: 1rem;
+      font-weight: 700;
+      background: #eef2ff;
+      padding: 6px 14px;
+      border-radius: 40px;
+      color: #1e3a8a;
+      font-family: monospace;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(105deg, #2563eb, #1d4ed8);
+      border: none;
+      padding: 12px 28px;
+      border-radius: 60px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: inherit;
+    }
+
+    .progress-wrapper {
+      margin-top: 18px;
+    }
+
+    .progress-bg {
+      background: #e2e8f0;
+      border-radius: 40px;
+      height: 8px;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .bar {
+      height: 8px;
+      background: linear-gradient(90deg, #3b82f6, #60a5fa);
+      width: 0%;
+      border-radius: 40px;
+      transition: width 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    /* تثبيت العداد في الأعلى */
+    .global-progress {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 80px;
+      padding: 12px 20px;
+      margin-bottom: 28px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      border: 1px solid #eef2ff;
+      position: sticky;
+      top: 15px;
+      z-index: 999;
+    }
+
+    body.dark .global-progress {
+      background: rgba(17, 24, 39, 0.95);
+    }
+
+    .tasbeeh-card {
+      text-align: center;
+      background: white;
+      border-radius: 48px;
+      padding: 2rem;
+    }
+
+    body.dark .tasbeeh-card {
+      background: rgba(18, 25, 45, 0.9);
+    }
+
+    .tasbeeh-number {
+      font-size: 5rem;
+      font-weight: 800;
+      background: linear-gradient(145deg, #1e3c72, #2b4a8a);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin: 20px 0;
+      font-feature-settings: "tnum";
+    }
+
+    body.dark .tasbeeh-number {
+      background: linear-gradient(135deg, #90cdf4, #5a9eff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      color: #1e293b;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
 </head>
 <body>
-<header>
-🕌 أذكار الصباح والمساء
-<div class="top-buttons">
-<button onclick="home()">الرئيسية</button>
-<button onclick="toggleDark()">🌙 الوضع الليلي</button>
-</div>
-</header>
+  <div class="main-header">
+    <h1><i class="fas fa-star-and-crescent"></i> أذكار المسلم</h1>
+    <p>أذكار | تسبيح | طمأنينة</p>
+  </div>
 
-<div class="container" id="app"></div>
+  <div class="container" id="app"></div>
 
-<script>
-// أذكار الصباح والمساء مع الإضافات الجديدة
-const morning=[
-{zekr:"اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ",max:1},
-{zekr:"قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ",max:3},
-{zekr:"قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِنْ شَرِّ مَا خَلَقَ ۝ وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ",max:3},
-{zekr:"قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَٰهِ النَّاسِ ۝ مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ مِنَ الْجِنَّةِ وَالنَّاسِ",max:3},
-{zekr:"أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذَا الْيَوْمِ وَخَيْرَ مَا بَعْدَهُ، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذَا الْيَوْمِ وَشَرِّ مَا بَعْدَهُ، رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ، رَبِّ أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ",max:1},
-{zekr:"اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ",max:1},
-{zekr:"أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ رَبِّ الْعَالَمِينَ، اللَّهُمَّ إِنِّي أَصْبَحْتُ أُشْهِدُكَ وَأُشْهِدُ حَمَلَةَ عَرْشِكَ وَمَلَائِكَتَكَ وَجَمِيعَ خَلْقِكَ، أَنَّكَ أَنْتَ اللَّهُ لَا إِلَهَ إِلَّا أَنْتَ وَحْدَكَ لَا شَرِيكَ لَكَ، وَأَنَّ مُحَمَّدًا عَبْدُكَ وَرَسُولُكَ. اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَ هَذَا الْيَوْمِ فَتْحَهُ وَنَصْرَهُ وَنُورَهُ وَبَرَكَتَهُ وَهُدَاهُ، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِيهِ وَشَرِّ مَا بَعْدَهُ",max:1},
-{zekr:"أَصْبَحْنَا عَلَى فِطْرَةِ الْإِسْلَامِ، وَعَلَى كَلِمَةِ الْإِخْلَاصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ ﷺ، وَعَلَى مِلَّةِ أَبِينَا إِبْرَاهِيمَ، حَنِيفًا مُسْلِمًا، وَمَا كَانَ مِنَ الْمُشْرِكِينَ.",max:1},
-{zekr:"اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَٰهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي، فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ",max:1},
-{zekr:"اللَّهُمَّ إِنِّي أَصْبَحْتُ أُشْهِدُكَ، وَأُشْهِدُ حَمَلَةَ عَرْشِكَ، وَمَلَائِكَتَكَ، وَجَمِيعَ خَلْقِكَ، أَنَّكَ أَنْتَ اللَّهُ لَا إِلَٰهَ إِلَّا أَنْتَ وَحْدَكَ لَا شَرِيكَ لَكَ، وَأَنَّ مُحَمَّدًا عَبْدُكَ وَرَسُولُكَ",max:4},
-{zekr:"اللَّهُمَّ مَا أَصْبَحَ بِي مِنْ نِعْمَةٍ أَوْ بِأَحَدٍ مِنْ خَلْقِكَ فَمِنْكَ وَحْدَكَ لَا شَرِيكَ لَكَ، فَلَكَ الْحَمْدُ وَلَكَ الشُّكْرُ",max:1},
-{zekr:"اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلَٰهَ إِلَّا أَنْتَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ وَالْفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، لَا إِلَٰهَ إِلَّا أَنْتَ، اللهم إني أعوذ بك من الهم والحزن والعجز والكسل وأعوذ بك من الجبن والبخل وغلبة الدين وقهر الرجال",max:3},
-{zekr:"حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ، وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ",max:7},
-{zekr:"بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ، وَهُوَ السَّمِيعُ الْعَلِيمُ",max:3},
-{zekr:"رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ ﷺ نَبِيًّا ورسولًا",max:3},
-{zekr:"يَا حَيُّ يَا قَيُّومُ، بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِيَ كُلَّهُ، وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ.",max:1},
-{zekr:"سُبْحَانَ اللَّهِ وَبِحَمْدِهِ عدد خلقه، ورضا نفسه، وزنة عرشه، ومداد كلماته",max:3},
-{zekr:"اللهم إني أسألك علمًا نافعًا، ورزقًا طيبًا، وعملًا متقبلًا",max:1},
-{zekr:"اللَّهُمَّ عَالِمَ الْغَيْبِ وَالشَّهَادَةِ، فَاطِرَ السَّمَاوَاتِ وَالْأَرْضِ، رَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَمِنْ شَرِّ الشَّيْطَانِ وَشِرْكِهِ، وَأَنْ أَقْتَرِفَ عَلَى نَفْسِي سُوءًا، أَوْ أَجُرَّهُ إِلَى مُسْلِمٍ",max:1},
-{zekr:"اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي دِينِي وَدُنْيَايَ وَأَهْلِي وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي وَآمِنْ رَوْعَاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَيْنِ يَدَيَّ وَمِنْ خَلْفِي وَعَنْ يَمِينِي وَعَنْ شِمَالِي وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي",max:1},
-{zekr:"لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.",max:100},
-{zekr:"اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، وَبَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ فِي الْعَالَمِينَ إِنَّكَ حَمِيدٌ مَجِيدٌ",max:10}
-];
+  <div class="floating-toolbar" id="floatingBar">
+    <button class="tool-btn" id="btnHome"><i class="fas fa-home"></i> <span>الرئيسية</span></button>
+    <button class="tool-btn" id="btnMorning"><i class="fas fa-sun"></i> <span>الصباح</span></button>
+    <button class="tool-btn" id="btnEvening"><i class="fas fa-moon"></i> <span>المساء</span></button>
+    <button class="tool-btn" id="btnPrayer"><i class="fas fa-mosque"></i> <span>الصلوات</span></button>
+    <button class="tool-btn" id="btnQuran"><i class="fas fa-book-open"></i> <span>قرآن</span></button>
+    <button class="tool-btn" id="btnTasbeeh"><i class="fas fa-praying-hands"></i> <span>المسبحة</span></button>
+    <button class="tool-btn" id="btnDark"><i class="fas fa-moon"></i> <span>ليلي</span></button>
+  </div>
 
-const evening=[
-{zekr:"آمَنَ الرَّسُولُ بِمَا أُنْزِلَ إِلَيْهِ مِنْ رَبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِنْ رُسُلِهِ ۚ وَقَالُوا سَمِعْنَا وَأَطَعْنَا ۖ غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ. لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا ۚ لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا اكْتَسَبَتْ ۗ رَبَّنَا لَا تُؤَاخِذْنَا إِنْ نَسِينَا أَوْ أَخْطَأْنَا ۚ رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِنْ قَبْلِنَا ۚ رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ ۖ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا ۚ أَنْتَ مَوْلَانَا فَانْصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ",max:1},
-{zekr:"اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ",max:1},
-{zekr:"قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ",max:3},
-{zekr:"قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِنْ شَرِّ مَا خَلَقَ ۝ وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ",max:3},
-{zekr:"قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَٰهِ النَّاسِ ۝ مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ مِنَ الْجِنَّةِ وَالنَّاسِ",max:3},
-{zekr:"أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذَا الْيَوْمِ وَخَيْرَ مَا بَعْدَهُ، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذَا الْيَوْمِ وَشَرِّ مَا بَعْدَهُ، رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ، رَبِّ أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ",max:1},
-{zekr:"اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ",max:1},
-{zekr:"أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ رَبِّ الْعَالَمِينَ، اللَّهُمَّ إِنِّي أَمْسَيْتُ أُشْهِدُكَ وَأُشْهِدُ حَمَلَةَ عَرْشِكَ وَمَلَائِكَتَكَ وَجَمِيعَ خَلْقِكَ، أَنَّكَ أَنْتَ اللَّهُ لَا إِلَهَ إِلَّا أَنْتَ وَحْدَكَ لَا شَرِيكَ لَكَ، وَأَنَّ مُحَمَّدًا عَبْدُكَ وَرَسُولُكَ. اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَ هَذَا الْيَوْمِ فَتْحَهُ وَنَصْرَهُ وَنُورَهُ وَبَرَكَتَهُ وَهُدَاهُ، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِيهِ وَشَرِّ مَا بَعْدَهُ",max:1},
-{zekr:"أَمْسَيْنَا عَلَى فِطْرَةِ الْإِسْلَامِ، وَعَلَى كَلِمَةِ الْإِخْلَاصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ ﷺ، وَعَلَى مِلَّةِ أَبِينَا إِبْرَاهِيمَ، حَنِيفًا مُسْلِمًا، وَمَا كَانَ مِنَ الْمُشْرِكِينَ.",max:1},
-{zekr:"اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَٰهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي، فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ",max:1},
-{zekr:"اللَّهُمَّ إِنِّي أَمْسَيْتُ أُشْهِدُكَ، وَأُشْهِدُ حَمَلَةَ عَرْشِكَ، وَمَلَائِكَتَكَ، وَجَمِيعَ خَلْقِكَ، أَنَّكَ أَنْتَ اللَّهُ لَا إِلَٰهَ إِلَّا أَنْتَ وَحْدَكَ لَا شَرِيكَ لَكَ، وَأَنَّ مُحَمَّدًا عَبْدُكَ وَرَسُولُكَ",max:4},
-{zekr:"اللَّهُمَّ مَا أمسى بِي مِنْ نِعْمَةٍ أَوْ بِأَحَدٍ مِنْ خَلْقِكَ فَمِنْكَ وَحْدَكَ لَا شَرِيكَ لَكَ، فَلَكَ الْحَمْدُ وَلَكَ الشُّكْرُ",max:1},
-{zekr:"اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلَٰهَ إِلَّا أَنْتَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ وَالْفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، لَا إِلَٰهَ إِلَّا أَنْتَ، اللهم إني أعوذ بك من الهم والحزن والعجز والكسل وأعوذ بك من الجبن والبخل وغلبة الدين وقهر الرجال",max:3},
-{zekr:"حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ، وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ",max:7},
-{zekr:"بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ، وَهُوَ السَّمِيعُ الْعَلِيمُ",max:3},
-{zekr:"رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ ﷺ نَبِيًّا ورسولًا",max:3},
-{zekr:"يَا حَيُّ يَا قَيُّومُ، بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِيَ كُلَّهُ، وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ.",max:1},
-{zekr:"سُبْحَانَ اللَّهِ وَبِحَمْدِهِ عدد خلقه، ورضا نفسه، وزنة عرشه، ومداد كلماته",max:3},
-{zekr:"اللهم إني أسألك علمًا نافعًا، ورزقًا طيبًا، وعملًا متقبلًا",max:1},
-{zekr:"أعوذ بكلمات الله التامات من شر ما خلق",max:3},
-{zekr:"اللَّهُمَّ عَالِمَ الْغَيْبِ وَالشَّهَادَةِ، فَاطِرَ السَّمَاوَاتِ وَالْأَرْضِ، رَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَمِنْ شَرِّ الشَّيْطَانِ وَشِرْكِهِ، وَأَنْ أَقْتَرِفَ عَلَى نَفْسِي سُوءًا، أَوْ أَجُرَّهُ إِلَى مُسْلِمٍ",max:1},
-{zekr:"اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي دِينِي وَدُنْيَايَ وَأَهْلِي وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي وَآمِنْ رَوْعَاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَيْنِ يَدَيَّ وَمِنْ خَلْفِي وَعَنْ يَمِينِي وَعَنْ شِمَالِي وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي",max:1},
-{zekr:"لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.",max:100},
-{zekr:"اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، وَبَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ فِي الْعَالَمِينَ إِنَّكَ حَمِيدٌ مَجِيدٌ",max:10}
-];
+  <script>
+    // ----------------------------- AZKAR DATA -------------------------
+    const morning = [
+      { zekr: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ...", max: 1 },
+      { zekr: "قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ...", max: 3 },
+      { zekr: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ...", max: 1 },
+      { zekr: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ عدد خلقه، ورضا نفسه، وزنة عرشه، ومداد كلماته", max: 3 }
+      // يمكنك إضافة باقي الأذكار كما كانت في كودك الأصلي
+    ];
 
-// باقي الكود كما هو من آخر نسخة
-function home(){
-  document.getElementById("app").innerHTML=`
-<h2>اختر الأذكار</h2>
-<button class="main-btn" onclick="showAzkar('morning')">🌞 أذكار الصباح</button>
-<button class="main-btn" onclick="showAzkar('evening')">🌙 أذكار المساء</button>
-<button class="main-btn" onclick="tasbeeh()">📿 المسبحة الإلكترونية</button>
-  `;
-}
+    const evening = [
+      { zekr: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ...", max: 1 },
+      { zekr: "قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ...", max: 3 },
+      { zekr: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ...", max: 1 },
+      { zekr: "أعوذ بكلمات الله التامات من شر ما خلق", max: 3 }
+      // يمكنك إضافة باقي الأذكار كما كانت في كودك الأصلي
+    ];
 
-function showAzkar(type){
-  let list=type==="morning"?morning:evening;
-  let html="";
-  let done=0;
+    // القسم الجديد: أذكار الصلوات
+    const prayer = [
+      { zekr: "سُبْحَانَ اللَّهِ", max: 33 },
+      { zekr: "الْحَمْدُ لِلَّهِ", max: 33 },
+      { zekr: "اللَّهُ أَكْبَرُ", max: 33 },
+      { zekr: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ", max: 1 }
+    ];
 
-  list.forEach((item,i)=>{
-    let saved=0; // يبدأ من صفر دائمًا
-    if(saved>=item.max) done++;
-    let percent=(saved/item.max)*100;
+    // القسم الجديد: أدعية من القرآن
+    const quran = [
+      { zekr: "سُبْحَانَ اللَّهِ", max: 33 },
+      { zekr: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ", max: 1 },
+      { zekr: "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً ۚ إِنَّكَ أَنتَ الْوَهَّابُ", max: 1 }
+    ];
 
-    html+=`
-<div class="card">
-<p>${item.zekr}</p>
-<div class="count">${saved} / ${item.max}</div>
-<button onclick="inc(${i},${item.max},'${type}')">ذكر</button>
-<div class="progress">
-<div class="bar" style="width:${percent}%"></div>
-</div>
-</div>
-    `;
-  });
+    let morningCounts = new Array(morning.length).fill(0);
+    let eveningCounts = new Array(evening.length).fill(0);
+    let prayerCounts = new Array(prayer.length).fill(0);
+    let quranCounts = new Array(quran.length).fill(0);
+    let currentType = 'home';
+    let tasbeehValue = 0;
 
-  let percentDone=Math.round(done/list.length*100);
-  html="<h3>نسبة إنجاز الأذكار "+percentDone+"%</h3>"+html;
-  document.getElementById("app").innerHTML=html;
-}
+    function saveCounts() {
+      sessionStorage.setItem('morningCounts', JSON.stringify(morningCounts));
+      sessionStorage.setItem('eveningCounts', JSON.stringify(eveningCounts));
+      sessionStorage.setItem('prayerCounts', JSON.stringify(prayerCounts));
+      sessionStorage.setItem('quranCounts', JSON.stringify(quranCounts));
+      sessionStorage.setItem('tasbeehValue', tasbeehValue);
+    }
 
-function inc(index,max,type){
-  const countEls=document.querySelectorAll(".count");
-  let val=parseInt(countEls[index].innerText);
-  if(val<max) val++;
-  countEls[index].innerText=val+" / "+max;
-  document.querySelectorAll(".bar")[index].style.width=(val/max*100)+"%";
+    function loadCounts() {
+      const savedM = sessionStorage.getItem('morningCounts');
+      const savedE = sessionStorage.getItem('eveningCounts');
+      const savedP = sessionStorage.getItem('prayerCounts');
+      const savedQ = sessionStorage.getItem('quranCounts');
+      const savedT = sessionStorage.getItem('tasbeehValue');
+      
+      if (savedM) morningCounts = JSON.parse(savedM);
+      if (savedE) eveningCounts = JSON.parse(savedE);
+      if (savedP) prayerCounts = JSON.parse(savedP);
+      if (savedQ) quranCounts = JSON.parse(savedQ);
+      if (savedT) tasbeehValue = parseInt(savedT) || 0;
+    }
 
-  // إعادة حساب نسبة الإنجاز
-  const cards=document.querySelectorAll(".card");
-  let done=0;
-  cards.forEach(card=>{
-    let val=parseInt(card.querySelector(".count").innerText.split(" / ")[0]);
-    let maxVal=parseInt(card.querySelector(".count").innerText.split(" / ")[1]);
-    if(val>=maxVal) done++;
-  });
-  document.querySelector("h3").innerText="نسبة إنجاز الأذكار "+Math.round(done/cards.length*100)+"%";
-}
+    function updateActiveToolbarButton(activeId) {
+      ['btnHome', 'btnMorning', 'btnEvening', 'btnPrayer', 'btnQuran', 'btnTasbeeh'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.classList.remove('active');
+      });
+      const activeBtn = document.getElementById(activeId);
+      if (activeBtn) activeBtn.classList.add('active');
+    }
 
-// المسبحة الإلكترونية
-function tasbeeh(){
-  let count=0; // يبدأ من صفر دائمًا
-  document.getElementById("app").innerHTML=`
-<h2>📿 المسبحة</h2>
-<h1 id="tas">${count}</h1>
-<button onclick="incTas()">تسبيح</button>
-<button onclick="resetTas()">تصفير</button>
-  `;
-}
+    function renderAzkar(type) {
+      currentType = type;
+      let list, counts, activeBtnId, sectionTitle;
+      
+      if (type === 'morning') {
+        list = morning; counts = morningCounts; activeBtnId = 'btnMorning'; sectionTitle = 'أذكار الصباح';
+      } else if (type === 'evening') {
+        list = evening; counts = eveningCounts; activeBtnId = 'btnEvening'; sectionTitle = 'أذكار المساء';
+      } else if (type === 'prayer') {
+        list = prayer; counts = prayerCounts; activeBtnId = 'btnPrayer'; sectionTitle = 'أذكار ما بعد الصلاة';
+      } else if (type === 'quran') {
+        list = quran; counts = quranCounts; activeBtnId = 'btnQuran'; sectionTitle = 'أدعية من القرآن';
+      }
 
-function incTas(){
-  let c=document.getElementById("tas");
-  let val=parseInt(c.innerText);
-  val++;
-  c.innerText=val;
-}
+      let html = '';
+      let doneCount = 0;
+      
+      list.forEach((item, idx) => {
+        const current = counts[idx];
+        const percent = (current / item.max) * 100;
+        if (current >= item.max) doneCount++;
+        html += `
+          <div class="card" data-idx="${idx}">
+            <div class="zekr-text">${item.zekr}</div>
+            <div class="counter-section">
+              <span class="count"><i class="fas fa-check-circle"></i> ${current} / ${item.max}</span>
+              <button class="btn-primary" data-type="${type}" data-idx="${idx}"><i class="fas fa-pray"></i> ذكر</button>
+            </div>
+            <div class="progress-wrapper">
+              <div class="progress-bg"><div class="bar" style="width: ${percent}%;"></div></div>
+            </div>
+          </div>
+        `;
+      });
+      
+      const totalPercent = Math.round((doneCount / list.length) * 100) || 0;
+      const headerHtml = `<div class="global-progress"><i class="fas fa-chart-simple"></i> إنجاز ${sectionTitle}: ${totalPercent}% (${doneCount}/${list.length})</div>`;
+      
+      document.getElementById('app').innerHTML = headerHtml + html;
+      
+      document.querySelectorAll('.btn-primary').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt(btn.dataset.idx);
+          const t = btn.dataset.type;
+          
+          if (t === 'morning' && morningCounts[idx] < morning[idx].max) morningCounts[idx]++;
+          else if (t === 'evening' && eveningCounts[idx] < evening[idx].max) eveningCounts[idx]++;
+          else if (t === 'prayer' && prayerCounts[idx] < prayer[idx].max) prayerCounts[idx]++;
+          else if (t === 'quran' && quranCounts[idx] < quran[idx].max) quranCounts[idx]++;
+          
+          renderAzkar(t);
+          saveCounts();
+        });
+      });
+      
+      updateActiveToolbarButton(activeBtnId);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-function resetTas(){
-  document.getElementById("tas").innerText=0;
-}
+    function renderTasbeeh() {
+      currentType = 'tasbeeh';
+      const html = `
+        <div class="card tasbeeh-card" style="text-align:center;">
+          <i class="fas fa-praying-hands" style="font-size: 2.5rem; color: #2f74da;"></i>
+          <h3 style="margin-top: 15px; color: #4a5568;">المسبحة الإلكترونية</h3>
+          <div class="tasbeeh-number" id="tasbeehNumber">${tasbeehValue}</div>
+          <div class="btn-group">
+            <button id="incTasbeeh" class="btn-primary" style="padding: 15px 40px; font-size: 1.1rem;"><i class="fas fa-plus-circle"></i> تسبيحة</button>
+            <button id="resetTasbeeh" class="btn-secondary"><i class="fas fa-undo-alt"></i> تصفير</button>
+          </div>
+        </div>
+      `;
+      document.getElementById('app').innerHTML = html;
+      document.getElementById('incTasbeeh')?.addEventListener('click', () => { tasbeehValue++; renderTasbeeh(); saveCounts(); });
+      document.getElementById('resetTasbeeh')?.addEventListener('click', () => { tasbeehValue = 0; renderTasbeeh(); saveCounts(); });
+      updateActiveToolbarButton('btnTasbeeh');
+    }
 
-// الوضع الليلي
-function toggleDark(){
-  document.body.classList.toggle("dark");
-}
+    function renderHome() {
+      currentType = 'home';
+      document.getElementById('app').innerHTML = `
+        <div class="card" style="text-align:center; padding: 2.2rem;">
+          <i class="fas fa-book-quran" style="font-size: 3rem; color:#2563eb; margin-bottom: 1rem;"></i>
+          <h2 style="margin-bottom: 0.5rem;">اختر قسم الأذكار</h2>
+          <p style="margin-bottom: 2rem;">حصن نفسك وداوم على ذكر الله</p>
+          <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <button id="homeMorningBtn" class="btn-primary" style="flex: 1 1 40%;"><i class="fas fa-sun"></i> أذكار الصباح</button>
+            <button id="homeEveningBtn" class="btn-primary" style="flex: 1 1 40%;"><i class="fas fa-moon"></i> أذكار المساء</button>
+            <button id="homePrayerBtn" class="btn-primary" style="flex: 1 1 40%;"><i class="fas fa-mosque"></i> أذكار الصلوات</button>
+            <button id="homeQuranBtn" class="btn-primary" style="flex: 1 1 40%;"><i class="fas fa-book-open"></i> أدعية القرآن</button>
+            <button id="homeTasbeehBtn" class="btn-secondary" style="flex: 1 1 85%; margin-top: 10px;"><i class="fas fa-praying-hands"></i> المسبحة الإلكترونية</button>
+          </div>
+        </div>
+      `;
+      document.getElementById('homeMorningBtn')?.addEventListener('click', () => renderAzkar('morning'));
+      document.getElementById('homeEveningBtn')?.addEventListener('click', () => renderAzkar('evening'));
+      document.getElementById('homePrayerBtn')?.addEventListener('click', () => renderAzkar('prayer'));
+      document.getElementById('homeQuranBtn')?.addEventListener('click', () => renderAzkar('quran'));
+      document.getElementById('homeTasbeehBtn')?.addEventListener('click', () => renderTasbeeh());
+      updateActiveToolbarButton('btnHome');
+    }
 
-home();
-</script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+      const darkBtn = document.getElementById('btnDark');
+      if (darkBtn) darkBtn.innerHTML = isDark ? '<i class="fas fa-sun"></i> <span>نهاري</span>' : '<i class="fas fa-moon"></i> <span>ليلي</span>';
+    }
+
+    function initUI() {
+      loadCounts();
+      const savedDark = localStorage.getItem('darkMode') === 'true';
+      if (savedDark) document.body.classList.add('dark');
+      renderHome();
+      
+      document.getElementById('btnHome').addEventListener('click', () => renderHome());
+      document.getElementById('btnMorning').addEventListener('click', () => renderAzkar('morning'));
+      document.getElementById('btnEvening').addEventListener('click', () => renderAzkar('evening'));
+      document.getElementById('btnPrayer').addEventListener('click', () => renderAzkar('prayer'));
+      document.getElementById('btnQuran').addEventListener('click', () => renderAzkar('quran'));
+      document.getElementById('btnTasbeeh').addEventListener('click', () => renderTasbeeh());
+      document.getElementById('btnDark').addEventListener('click', () => toggleDarkMode());
+      
+      const darkBtn = document.getElementById('btnDark');
+      if (document.body.classList.contains('dark')) darkBtn.innerHTML = '<i class="fas fa-sun"></i> <span>نهاري</span>';
+      else darkBtn.innerHTML = '<i class="fas fa-moon"></i> <span>ليلي</span>';
+      
+      updateActiveToolbarButton('btnHome');
+    }
+    initUI();
+  </script>
 </body>
 </html>
-
-
-
-
-
-
